@@ -1,24 +1,15 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 
-import StickyFooter from './Footer';
+import SideBar from './SideBar';
 
 import { getRoutes } from '../routes';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-  },
-}));
+
 
 const Layout = () => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <SideBar>
       <Switch>
         <Redirect exact from="/" to="/companies" />
         {getRoutes().map((props, key) => {
@@ -30,8 +21,7 @@ const Layout = () => {
           );
         })}
       </Switch>
-      <StickyFooter />
-    </div>
+    </SideBar>
   );
 };
 

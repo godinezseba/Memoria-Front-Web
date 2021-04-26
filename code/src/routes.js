@@ -1,3 +1,8 @@
+import {
+  Business,
+  Fastfood,
+} from '@material-ui/icons';
+
 import { CompaniesList } from './views/Companies';
 import { ProductsForm } from './views/Products';
 
@@ -8,8 +13,8 @@ import { ProductsForm } from './views/Products';
  * all this paths have:
  * - name (display in sidebar and breadcrumbs),
  * - TODO: access (user access),
- * - icon (display in sidebar), (maybe used in the future)
- * - component (react component to be display)
+ * - icon (function): display in sidebar,
+ * - component: react component to be display,
  * - childrens (the paths that start with this name, like :id or history/:id in aisles)
  *
  * Every children have the same attributes,
@@ -21,12 +26,14 @@ import { ProductsForm } from './views/Products';
 */
 const routes = {
   '/companies': {
-    navbar: 'Noticias',
+    navbar: 'Empresas',
     component: CompaniesList,
+    icon: <Business />,
   },
   '/products': {
-    navbar: 'Calendario',
+    navbar: 'Productos',
     component: ProductsForm,
+    icon: <Fastfood />,
   },
 }
 
