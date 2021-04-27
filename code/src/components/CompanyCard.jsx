@@ -5,6 +5,25 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  company: PropTypes.shape({
+    name: PropTypes.string,
+    picture: PropTypes.string,
+    description: PropTypes.string,
+    country: PropTypes.string,
+  }),
+};
+
+const defaultProps = {
+  company: {
+    name: 'test',
+    picture: '',
+    description: 'test',
+    country: '',
+  },
+};
 
 const useStyles = makeStyles({
   root: {
@@ -40,3 +59,6 @@ export default function CompanyCard({ company }) {
     </Card>
   );
 }
+
+CompanyCard.propTypes = propTypes;
+CompanyCard.defaultProps = defaultProps;

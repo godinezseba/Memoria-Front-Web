@@ -1,8 +1,11 @@
 import React from 'react';
+import { Typography, Box, Paper } from '@material-ui/core';
 
-export const ProductsForm = () => (
-  <>
-    <h1>Hello World!</h1>
-    <h2>From Products</h2>
-  </>
+const ProductsForm = () => (
+  <Box>
+    <Typography variant="h3">Formulario de ingreso de Datos</Typography>
+    <Paper>hola</Paper>
+  </Box>
 );
+
+export default ProductsForm;

@@ -16,11 +16,19 @@ import {
   Divider,
   Container,
 } from '@material-ui/core';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 
 import StickyFooter from './Footer';
 
 import { getSidebatPaths } from '../routes';
-import { withRouter } from 'react-router';
+
+const propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  children: PropTypes.func.isRequired,
+};
 
 const drawerWidth = 240;
 
@@ -105,17 +113,23 @@ const SideBar = ({ history, children }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
+
   return (
     <div className={classes.root}>
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            className={clsx(
+              classes.menuButton,
+              open && classes.menuButtonHidden
+            )}
           >
             <MenuIcon />
           </IconButton>
@@ -135,14 +149,13 @@ const SideBar = ({ history, children }) => {
         </div>
         <Divider />
         <List>
-          {getSidebatPaths().map((props, key) => {
-            const { navbar, icon = <Apps />, path } = props;
+          {getSidebatPaths().map((route, key) => {
+            const { navbar, icon = <Apps />, path } = route;
+            const keyName = `${navbar}-${key}`;
 
             return (
-              <ListItem button key={`${navbar}-${key}`} onClick={() => history.push(path)}>
-                <ListItemIcon>
-                  {icon}
-                </ListItemIcon>
+              <ListItem button key={keyName} onClick={() => history.push(path)}>
+                <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={navbar} />
               </ListItem>
             );
@@ -158,6 +171,8 @@ const SideBar = ({ history, children }) => {
       </main>
     </div>
   );
-}
+};
+
+SideBar.propTypes = propTypes;
 
 export default withRouter(SideBar);

@@ -5,24 +5,16 @@ import SideBar from './SideBar';
 
 import { getRoutes } from '../routes';
 
-
-
-const Layout = () => {
-  return (
-    <SideBar>
-      <Switch>
-        <Redirect exact from="/" to="/companies" />
-        {getRoutes().map((props, key) => {
-          const { path, component } = props;
-          return (
-            <Route path={path} key={path}>
-              {component}
-            </Route>
-          );
-        })}
-      </Switch>
-    </SideBar>
-  );
-};
+const Layout = () => (
+  <SideBar>
+    <Switch>
+      <Redirect exact from="/" to="/companies" />
+      {getRoutes().map((route) => {
+        const { path, component } = route;
+        return <Route path={path}>{component}</Route>;
+      })}
+    </Switch>
+  </SideBar>
+);
 
 export default Layout;

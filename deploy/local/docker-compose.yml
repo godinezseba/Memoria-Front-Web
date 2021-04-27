@@ -2,7 +2,7 @@ version: '3'
 
 services:
   front-web:
-    build: 
+    build:
       context: ../..
       dockerfile: ./deploy/local/Dockerfile
     volumes:
@@ -13,4 +13,4 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true
-    command: ["yarn", "run", "dev"]
+    command: ['yarn', 'run', 'dev']

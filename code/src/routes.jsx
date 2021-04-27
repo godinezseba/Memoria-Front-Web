@@ -1,10 +1,8 @@
-import {
-  Business,
-  Fastfood,
-} from '@material-ui/icons';
+import React from 'react';
+import { Business, Fastfood } from '@material-ui/icons';
 
-import { CompaniesList } from './views/Companies';
-import { ProductsForm } from './views/Products';
+import CompaniesList from './views/Companies';
+import ProductsForm from './views/Products';
 
 /**
  * STRUCTURE:
@@ -23,7 +21,7 @@ import { ProductsForm } from './views/Products';
  * - IF don't have the name it is use the actual path,
  * ex: the :id is replace with the number in the actual path.
  * - IF don't have access it is use the parent access.
-*/
+ */
 const routes = {
   '/companies': {
     navbar: 'Empresas',
@@ -35,7 +33,7 @@ const routes = {
     component: ProductsForm,
     icon: <Fastfood />,
   },
-}
+};
 
 /**
  * Function that convert the routes object to a list
@@ -54,7 +52,7 @@ export const getRoutes = () => {
         const childrensEntries = Object.entries(childrens);
         routesList = childrensEntries.reduce(
           getChildrenRoutes(actualPath, actualAccess),
-          routesList,
+          routesList
         );
       }
       // if has component atribute add this object to the routes

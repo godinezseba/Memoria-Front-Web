@@ -1,3 +1,3 @@
-import { CompaniesList } from './CompaniesList';
+import CompaniesList from './CompaniesList';
 
-export { CompaniesList };
+export default CompaniesList;

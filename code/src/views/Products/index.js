@@ -1,3 +1,3 @@
-import { ProductsForm } from './ProductsForm';
+import ProductsForm from './ProductsForm';
 
-export { ProductsForm };
+export default ProductsForm;

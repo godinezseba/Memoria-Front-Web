@@ -10,9 +10,8 @@ function Copyright() {
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      </Link>
+      {new Date().getFullYear()}.
     </Typography>
   );
 }
@@ -22,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
+      theme.palette.type === 'light'
+        ? theme.palette.grey[200]
+        : theme.palette.grey[800],
   },
 }));
 
@@ -32,7 +33,9 @@ export default function StickyFooter() {
   return (
     <footer className={classes.footer}>
       <Container maxWidth="sm">
-        <Typography variant="body1">My sticky footer can be found here.</Typography>
+        <Typography variant="body1">
+          My sticky footer can be found here.
+        </Typography>
         <Copyright />
       </Container>
     </footer>
