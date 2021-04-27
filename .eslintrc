@@ -3,7 +3,9 @@
     "react-app",
     "eslint:recommended",
     "plugin:react/recommended",
+    "airbnb",
     "prettier",
+    "plugin:mdx/recommended",
     "plugin:react-hooks/recommended"
   ],
   "plugins": [

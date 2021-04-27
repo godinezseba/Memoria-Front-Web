@@ -32,6 +32,8 @@ export default function EnergyForm({ values, handleChange }) {
             label="C02"
             fullWidth
             autoComplete="cc-number"
+            value={values.co2}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -42,6 +44,8 @@ export default function EnergyForm({ values, handleChange }) {
             helperText="Last three digits on signature strip"
             fullWidth
             autoComplete="cc-csc"
+            value={values.water}
+            onChange={handleChange}
           />
         </Grid>
       </Grid>
