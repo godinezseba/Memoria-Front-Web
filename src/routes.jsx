@@ -25,12 +25,12 @@ import ProductsForm from './views/Products';
 const routes = {
   '/companies': {
     navbar: 'Empresas',
-    component: CompaniesList,
+    component: <CompaniesList />,
     icon: <Business />,
   },
   '/products': {
     navbar: 'Productos',
-    component: ProductsForm,
+    component: <ProductsForm />,
     icon: <Fastfood />,
   },
 };

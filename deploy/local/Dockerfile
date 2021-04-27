@@ -4,11 +4,11 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY code/package*.json ./
+COPY ./package*.json ./
 
 RUN yarn run install:clean
 
-COPY ./code /app
+COPY ./ /app
 
 # RUN yarn build
 

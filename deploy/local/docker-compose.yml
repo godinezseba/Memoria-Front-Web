@@ -6,7 +6,7 @@ services:
       context: ../..
       dockerfile: ./deploy/local/Dockerfile
     volumes:
-      - '../../code:/app'
+      - '../..:/app'
       - '/app/node_modules'
     ports:
       - '3000:3000'

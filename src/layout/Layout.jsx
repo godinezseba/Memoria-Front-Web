@@ -11,7 +11,7 @@ const Layout = () => (
       <Redirect exact from="/" to="/companies" />
       {getRoutes().map((route) => {
         const { path, component } = route;
-        return <Route path={path}>{component}</Route>;
+        return <Route path={path}> {component} </Route>;
       })}
     </Switch>
   </SideBar>
