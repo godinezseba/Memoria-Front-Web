@@ -9,9 +9,10 @@ const Layout = () => (
   <SideBar>
     <Switch>
       <Redirect exact from="/" to="/companies" />
-      {getRoutes().map((route) => {
+      {getRoutes().map((route, key) => {
         const { path, component } = route;
-        return <Route path={path}> {component} </Route>;
+        const keyName = `${path}-${key}`
+        return <Route path={path} key={keyName}> {component} </Route>;
       })}
     </Switch>
   </SideBar>

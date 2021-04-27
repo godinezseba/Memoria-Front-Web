@@ -1,6 +1,5 @@
-import { ProductForm, EnergyForm } from './OneProduct';
+import OneProductForm from './OneProduct/OneProduct';
 
 export {
-  ProductForm,
-  EnergyForm,
+  OneProductForm,
 };
