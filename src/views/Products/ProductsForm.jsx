@@ -1,8 +1,9 @@
-import React from 'react';
-import { Typography, Paper } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Typography, Paper, Tabs, Tab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { OneProductForm } from '../../components/Forms';
+import { OneProductForm, FileProducts } from '../../components/Forms';
+import CompaniesDummyList from '../../dummyData/dummy';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -29,15 +30,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProductsForm() {
   const classes = useStyles();
+  const [formSelected, setFormSelected] = useState(0);
+
+  const handleChange = (_, newValue) => {
+    setFormSelected(newValue);
+  }
+
   return (
     <>
       <Typography component="h1" variant="h4">Formulario de ingreso de Datos</Typography>
       <div className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Ingreso Producto
-          </Typography>
-          <OneProductForm />
+          <Tabs
+            value={formSelected}
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={handleChange}
+            aria-label="disabled tabs example"
+            variant="fullWidth"
+          >
+            <Tab label="Ingreso masivo" />
+            <Tab label="Ingreso Individual" />
+          </Tabs>
+          { formSelected === 0 ? (
+            <FileProducts companies={CompaniesDummyList} />
+          ) : (
+            <OneProductForm />
+          )}
         </Paper>
       </div>
     </>

@@ -94,25 +94,23 @@ export default function OneProduct({initialValues}) {
               </Step>
             ))}
           </Stepper>
-          <>
-            {getStepContent(activeStep)}
-            <div className={classes.buttons}>
-              {activeStep !== 0 && (
-                <Button onClick={handleBack} className={classes.button}>
-                  Back
-                </Button>
-              )}
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={activeStep === steps.length - 1 ? null : handleNext}
-                className={classes.button}
-                type={activeStep === steps.length - 1 ? 'submit' : ''}
-              >
-                {activeStep === steps.length - 1 ? 'Subir' : 'Siguiente'}
+          {getStepContent(activeStep)}
+          <div className={classes.buttons}>
+            {activeStep !== 0 && (
+              <Button onClick={handleBack} className={classes.button}>
+                Back
               </Button>
-            </div>
-          </>
+            )}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={activeStep === steps.length - 1 ? null : handleNext}
+              className={classes.button}
+              type={activeStep === steps.length - 1 ? 'submit' : ''}
+            >
+              {activeStep === steps.length - 1 ? 'Subir' : 'Siguiente'}
+            </Button>
+          </div>
         </Form>
         )
       }}
