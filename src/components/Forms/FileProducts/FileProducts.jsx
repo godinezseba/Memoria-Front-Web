@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
 import FileForm from './FileForm';
+import LoadFile from './LoadFile';
 
 const propTypes = {
   companies: PropTypes.arrayOf(PropTypes.shape({})),
@@ -37,6 +38,10 @@ const steps = ['Sobre el archivo', 'Subir el Archivo', 'Revisar Producto'];
 export default function FileProduct({ companies }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const [params, setParams] = useState({
+    metaData: {},
+    file: '',
+  });
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -46,12 +51,31 @@ export default function FileProduct({ companies }) {
     setActiveStep(activeStep - 1);
   };
 
-  const getStepContent = (step) => {
-    switch (step) {
+  const handleSubmitParams = (field, value) => {
+    setParams(prevState => ({
+      ...prevState,
+      [field]: value,
+    }));
+    handleNext();
+  }
+
+  const getStepContent = () => {
+    switch (activeStep) {
       case 0:
-        return (<FileForm companies={companies} />);
+        return (
+          <FileForm
+            initialValues={params.metaData}
+            companies={companies}
+            classes={classes}
+            handleSubmit={(data) => handleSubmitParams('metaData', data)}
+          />);
       case 1:
-        return (<h1>hola 2</h1>);
+        return (
+          <LoadFile
+            classes={classes}
+            handleSubmit={(data) => handleSubmitParams('file', data)}
+            handleBack={handleBack}
+          />);
       case 2:
         return (<h1>hola 3</h1>);
       default:
@@ -68,23 +92,7 @@ export default function FileProduct({ companies }) {
           </Step>
         ))}
       </Stepper>
-      {getStepContent(activeStep)}
-      <div className={classes.buttons}>
-        {activeStep !== 0 && (
-          <Button onClick={handleBack} className={classes.button}>
-            Atras
-          </Button>
-        )}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={activeStep === steps.length - 1 ? null : handleNext}
-          className={classes.button}
-          type={activeStep === steps.length - 1 ? 'submit' : ''}
-        >
-          {activeStep === steps.length - 1 ? 'Subir' : 'Siguiente'}
-        </Button>
-      </div>
+      {getStepContent()}
     </>
   )
 }
