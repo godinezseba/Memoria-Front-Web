@@ -84,118 +84,118 @@ export default function FileForm(props) {
                 renderInput={(params) => <TextField {...params} id="company-input" name="company-input" label="Empresa" required />}
               />
             </Grid>
-            <Grid item xs={12} sm={6} />
-          { !!values.company.id && (
-            <>
-              <Grid item xs={12}>
-                <Typography variant="body2" align="center" paragraph>
-                  Este formulario solo acepta archivos tipo CSV y Excel. Para esto es necesario especificar que atributos vienen en
-                  el archivo y el nombre de estos:
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="fileType-label" required>Tipo de Archivo</InputLabel>
-                  <Select
-                    required
-                    labelId="fileType"
-                    id="fileType"
-                    name="fileType"
-                    label="Tipo de Archivo"
-                    value={values.fileType}
-                    onChange={handleChange}
-                    fullWidth
-                  >
-                    <MenuItem value="CSV">CSV</MenuItem>
-                    <MenuItem value="Excel">Excel</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              {values.fileType === 'CSV' && (
+            <Grid item xs={12} sm={6}/>
+            { !!values.company?.id && (
+              <>
+                <Grid item xs={12}>
+                  <Typography variant="body2" align="center" paragraph>
+                    Este formulario solo acepta archivos tipo CSV y Excel. Para esto es necesario especificar que atributos vienen en
+                    el archivo y el nombre de estos:
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <InputLabel id="fileType-label" required>Tipo de Archivo</InputLabel>
+                    <Select
+                      required
+                      labelId="fileType"
+                      id="fileType"
+                      name="fileType"
+                      label="Tipo de Archivo"
+                      value={values.fileType}
+                      onChange={handleChange}
+                      fullWidth
+                    >
+                      <MenuItem value="CSV">CSV</MenuItem>
+                      <MenuItem value="Excel">Excel</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                {values.fileType === 'CSV' && (
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="separator"
+                      name="separator"
+                      label="Separador"
+                      fullWidth
+                      value={values.separator}
+                      onChange={handleChange}
+                      helperText="Simbolo utilizado para separar columnas en el archivo CSV."
+                    />
+                  </Grid>
+                )}
+                <Grid item xs={12}>
+                  <Typography variant="h6">
+                    Nombre de las Columnas
+                  </Typography>
+                  <Typography variant="subtitle2" gutterBottom color="secondary" style={{fontWeight: 'bold'}}>
+                    Considere mayusculas y minusculas!
+                  </Typography>
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="separator"
-                    name="separator"
-                    label="Separador"
+                    required
+                    id="nameColumn"
+                    name="nameColumn"
+                    label="Nombres"
                     fullWidth
-                    value={values.separator}
+                    value={values.nameColumn}
                     onChange={handleChange}
-                    helperText="Simbolo utilizado para separar columnas en el archivo CSV."
+                    helperText="Nombre del Producto"
                   />
                 </Grid>
-              )}
-              <Grid item xs={12}>
-                <Typography variant="h6">
-                  Nombre de las Columnas
-                </Typography>
-                <Typography variant="subtitle2" gutterBottom color="secondary" style={{fontWeight: 'bold'}}>
-                  Considere mayusculas y minusculas!
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="nameColumn"
-                  name="nameColumn"
-                  label="Nombres"
-                  fullWidth
-                  value={values.nameColumn}
-                  onChange={handleChange}
-                  helperText="Nombre del Producto"
-                />
-              </Grid>
-              <Grid item xs={6}/>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="barCodeColumn"
-                  name="barCodeColumn"
-                  label="Código de Barras del Producto"
-                  fullWidth
-                  value={values.barCodeColumn}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={6}/>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="co2Column"
-                  name="co2Column"
-                  label="Huella de Carbono"
-                  fullWidth
-                  value={values.co2Column}
-                  onChange={handleChange}
-                  helperText="Considerando la producción de mil productos."
-                />
-              </Grid>
-              <Grid item xs={6}/>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="waterColumn"
-                  name="waterColumn"
-                  label="Huella Hídrica"
-                  fullWidth
-                  value={values.waterColumn}
-                  onChange={handleChange}
-                  helperText="Considerando la producción de mil productos."
-                />
-              </Grid>
-              <Grid item xs={6}/>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="idColumn"
-                  name="idColumn"
-                  label="Identificador único"
-                  fullWidth
-                  value={values.idColumn}
-                  onChange={handleChange}
-                  helperText="Identificador utilizado para este producto (opcional)."
-                />
-              </Grid>
-              <Grid item xs={6}/>
-            </>
-          )}
+                <Grid item xs={6}/>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="barCodeColumn"
+                    name="barCodeColumn"
+                    label="Código de Barras del Producto"
+                    fullWidth
+                    value={values.barCodeColumn}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={6}/>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="co2Column"
+                    name="co2Column"
+                    label="Huella de Carbono"
+                    fullWidth
+                    value={values.co2Column}
+                    onChange={handleChange}
+                    helperText="Considerando la producción de mil productos."
+                  />
+                </Grid>
+                <Grid item xs={6}/>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="waterColumn"
+                    name="waterColumn"
+                    label="Huella Hídrica"
+                    fullWidth
+                    value={values.waterColumn}
+                    onChange={handleChange}
+                    helperText="Considerando la producción de mil productos."
+                  />
+                </Grid>
+                <Grid item xs={6}/>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="idColumn"
+                    name="idColumn"
+                    label="Identificador único"
+                    fullWidth
+                    value={values.idColumn}
+                    onChange={handleChange}
+                    helperText="Identificador utilizado para este producto (opcional)."
+                  />
+                </Grid>
+                <Grid item xs={6}/>
+              </>
+            )}
             <Grid item xs={12}>
               <div className={classes.buttons}>
                 <Button

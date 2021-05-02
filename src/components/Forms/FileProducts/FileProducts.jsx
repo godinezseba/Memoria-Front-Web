@@ -61,7 +61,7 @@ export default function FileProduct({ companies }) {
 
   const getStepContent = () => {
     switch (activeStep) {
-      case 0:
+      case -1:
         return (
           <FileForm
             initialValues={params.metaData}
@@ -69,7 +69,7 @@ export default function FileProduct({ companies }) {
             classes={classes}
             handleSubmit={(data) => handleSubmitParams('metaData', data)}
           />);
-      case 1:
+      case 0:
         return (
           <LoadFile
             classes={classes}
