@@ -1,7 +1,7 @@
 import React from 'react';
 import { Business, Fastfood } from '@material-ui/icons';
 
-import CompaniesList from './views/Companies';
+import { CompaniesForm } from './views/Companies';
 import ProductsForm from './views/Products';
 
 /**
@@ -25,7 +25,7 @@ import ProductsForm from './views/Products';
 const routes = {
   '/companies': {
     navbar: 'Empresas',
-    component: <CompaniesList />,
+    component: <CompaniesForm />,
     icon: <Business />,
   },
   '/products': {
