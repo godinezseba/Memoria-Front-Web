@@ -56,8 +56,7 @@ export default function FileForm(props) {
     <Formik
       enableReinitialize
       initialValues={initialValues}
-      onSubmit={(values, actions) => {
-        console.log(values);
+      onSubmit={(values) => {
         handleSubmit(values);
       }}
     >
@@ -106,12 +105,12 @@ export default function FileForm(props) {
                       onChange={handleChange}
                       fullWidth
                     >
-                      <MenuItem value="CSV">CSV</MenuItem>
-                      <MenuItem value="Excel">Excel</MenuItem>
+                      <MenuItem value="csv">CSV</MenuItem>
+                      <MenuItem value="excel">Excel</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
-                {values.fileType === 'CSV' && (
+                {values.fileType === 'csv' && (
                   <Grid item xs={12} sm={6}>
                     <TextField
                       id="separator"
@@ -201,8 +200,8 @@ export default function FileForm(props) {
                 <Button
                   id="submit"
                   type="submit"
-                  variant="contained"
                   color="primary"
+                  variant="contained"
                   className={classes.button}
                 >
                   Siguiente

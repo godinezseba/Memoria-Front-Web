@@ -3,13 +3,14 @@ import {
   Stepper,
   Step,
   StepLabel,
-  Button,
+  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
 import FileForm from './FileForm';
 import LoadFile from './LoadFile';
+import CertificateForm from './CertificateForm';
 
 const propTypes = {
   companies: PropTypes.arrayOf(PropTypes.shape({})),
@@ -33,15 +34,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Sobre el archivo', 'Subir el Archivo', 'Revisar Producto'];
+const steps = [
+  { name: 'Sobre el archivo' },
+  { name: 'Subir el Archivo' },
+  { name: 'Certificados', optional: (<Typography variant="caption">Opcional</Typography>) },
+];
 
 export default function FileProduct({ companies }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
-  const [params, setParams] = useState({
-    metaData: {},
-    file: '',
-  });
+  const [metaData, setMetaData] = useState({});
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -51,33 +53,48 @@ export default function FileProduct({ companies }) {
     setActiveStep(activeStep - 1);
   };
 
-  const handleSubmitParams = (field, value) => {
-    setParams(prevState => ({
-      ...prevState,
-      [field]: value,
-    }));
+  const handleSubmitParams = (value) => {
+    setMetaData(value);
     handleNext();
+  }
+
+  const submitProductsData = (data) => {
+    const { file: { type } } = data;
+    const { fileType } = metaData;
+
+    if (type.includes(fileType) ) {
+      handleNext();
+    }
+  }
+
+  const submitCertificateData = (data) => {
+    console.log(data);
   }
 
   const getStepContent = () => {
     switch (activeStep) {
-      case -1:
+      case 0:
         return (
           <FileForm
-            initialValues={params.metaData}
+            initialValues={metaData}
             companies={companies}
             classes={classes}
-            handleSubmit={(data) => handleSubmitParams('metaData', data)}
+            handleSubmit={handleSubmitParams}
           />);
-      case 0:
+      case 1:
         return (
           <LoadFile
             classes={classes}
-            handleSubmit={(data) => handleSubmitParams('file', data)}
             handleBack={handleBack}
+            handleSubmit={submitProductsData}
           />);
       case 2:
-        return (<h1>hola 3</h1>);
+        return (
+          <CertificateForm
+            classes={classes}
+            handleSubmit={submitCertificateData}
+          />
+        );
       default:
         throw new Error('Unknown step');
     }
@@ -87,8 +104,8 @@ export default function FileProduct({ companies }) {
     <>
       <Stepper activeStep={activeStep} className={classes.stepper}>
         {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+          <Step key={label.name}>
+            <StepLabel optional={label.optional}>{label.name}</StepLabel>
           </Step>
         ))}
       </Stepper>

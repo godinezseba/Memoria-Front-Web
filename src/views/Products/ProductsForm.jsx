@@ -37,28 +37,25 @@ export default function ProductsForm() {
   }
 
   return (
-    <>
-      <Typography component="h1" variant="h4">Formulario de ingreso de Datos</Typography>
-      <div className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Tabs
-            value={formSelected}
-            indicatorColor="primary"
-            textColor="primary"
-            onChange={handleChange}
-            aria-label="disabled tabs example"
-            variant="fullWidth"
-          >
-            <Tab label="Ingreso masivo" />
-            <Tab label="Ingreso Individual" />
-          </Tabs>
-          { formSelected === 0 ? (
-            <FileProducts companies={CompaniesDummyList} />
-          ) : (
-            <OneProductForm />
-          )}
-        </Paper>
-      </div>
-    </>
+    <div className={classes.layout}>
+      <Paper className={classes.paper}>
+        <Tabs
+          value={formSelected}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={handleChange}
+          aria-label="disabled tabs example"
+          variant="fullWidth"
+        >
+          <Tab label="Ingreso masivo" />
+          <Tab label="Ingreso Individual" />
+        </Tabs>
+        { formSelected === 0 ? (
+          <FileProducts companies={CompaniesDummyList} />
+        ) : (
+          <OneProductForm />
+        )}
+      </Paper>
+    </div>
   );
 }
