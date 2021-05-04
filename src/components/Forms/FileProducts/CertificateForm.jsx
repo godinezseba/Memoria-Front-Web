@@ -60,8 +60,8 @@ export default function CertificateForm(props) {
               id="file"
               name="file"
               component="label"
-              variant="contained"
-              color="primary"
+              color="secondary"
+              variant="outlined"
             >
               Agregar
               <input type="file" onChange={handleAddFile} hidden multiple/>

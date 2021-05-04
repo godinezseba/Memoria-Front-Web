@@ -13,6 +13,7 @@ const propTypes = {
   initialValues: PropTypes.shape({
     name: PropTypes.string,
     country: PropTypes.string,
+    carbonFootPrint: PropTypes.string,
     actions: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       file: PropTypes.shape({}),
@@ -64,7 +65,6 @@ export default function CompanyForm(props) {
         setFieldValue,
       }) => (
         <Form>
-          {console.log(values)}
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
@@ -84,6 +84,23 @@ export default function CompanyForm(props) {
             <Grid item xs={12} sm={6}/>
             <Grid item xs={12}>
               <Typography variant="h6">
+                Emisiones
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="carbonFootPrint"
+                name="carbonFootPrint"
+                label="Huella de Carbono"
+                fullWidth
+                value={values.name}
+                onChange={handleChange}
+                helperText="Considere todos los gases emitidos durante todo el año."
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}/>
+            <Grid item xs={12}>
+              <Typography variant="h6">
                 Acciones
               </Typography>
               <Typography variant="body2" align="center" paragraph>
@@ -98,8 +115,8 @@ export default function CompanyForm(props) {
                     <Button
                       id="submit"
                       type="submit"
-                      color="primary"
-                      variant="contained"
+                      color="secondary"
+                      variant="outlined"
                       onClick={() => push({})}
                     >
                       Agregar
@@ -121,15 +138,14 @@ export default function CompanyForm(props) {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={6} justify="center" container>
                           <Button
                             id={`actions.${key}.file`}
                             name={`actions.${key}.file`}
                             component="label"
-                            variant="contained"
-                            color="primary"
+                            variant="outlined"
                           >
-                            Archivo Acreditador
+                            Adjuntar Archivo
                             <input type="file" onChange={handleChange} hidden/>
                           </Button>
                         </Grid>
@@ -166,8 +182,8 @@ export default function CompanyForm(props) {
                     <Button
                       id="submit"
                       type="submit"
-                      color="primary"
-                      variant="contained"
+                      color="secondary"
+                      variant="outlined"
                       onClick={() => push({})}
                     >
                       Agregar
@@ -189,15 +205,14 @@ export default function CompanyForm(props) {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={6} justify="center" container>
                           <Button
                             id={`certificates.${key}.file`}
                             name={`certificates.${key}.file`}
                             component="label"
-                            variant="contained"
-                            color="primary"
+                            variant="outlined"
                           >
-                            Archivo Certificado
+                            Adjuntar Archivo
                             <input type="file" onChange={handleChange} hidden/>
                           </Button>
                         </Grid>

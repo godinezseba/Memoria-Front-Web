@@ -83,8 +83,7 @@ export default function LoadFile(props) {
         <Form>
           <div className={internalClasses.fileDropArea}>
             <Button
-              color="primary"
-              variant="contained"
+              variant="outlined"
               className={internalClasses.fakeButton}
             >
               Seleccione un archivo
