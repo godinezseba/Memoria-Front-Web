@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form, FieldArray } from 'formik';
-import { Typography, Button } from '@material-ui/core';
+import {
+  Button,
+  Typography,
+  IconButton,
+  TextField,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  Divider,
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const propTypes = {
   handleSubmit: PropTypes.func,
-  handleBack: PropTypes.func,
   classes: PropTypes.shape({
     buttons: PropTypes.string,
     button: PropTypes.string,
@@ -17,7 +26,6 @@ const propTypes = {
 
 const defaultProps = {
   handleSubmit: () => {},
-  handleBack: () => {},
   classes: {},
   initialValues: {
     files: [],
@@ -28,7 +36,6 @@ export default function CertificateForm(props) {
   const {
     initialValues,
     handleSubmit,
-    handleBack,
     classes,
   } = props;
 
@@ -43,9 +50,11 @@ export default function CertificateForm(props) {
       {({
         values,
         setFieldValue,
+        handleChange,
       }) => {
         const handleAddFile = (event) => {
-          setFieldValue('files', [...values.files, ...Array.from(event.currentTarget.files)]);
+          const newValues = Array.from(event.currentTarget.files).map((file) => ({ file }));
+          setFieldValue('files', [...values.files, ...newValues]);
         };
         return (
           <Form>
@@ -68,14 +77,47 @@ export default function CertificateForm(props) {
             </Button>
             <FieldArray name="files">
               {({ remove }) => (
-                <>
-                  {values.files?.map((certificate, key) => {
-                    const keyName = `${certificate.name}-${key}`;
+                <List>
+                  <Divider />
+                  {values.files?.map((certificate, index) => {
+                    const { file: { name }, nameFile } = certificate;
+                    const keyName = `${name}-${index}`;
                     return (
-                      <h1 key={keyName}>{certificate.name}</h1>
+                      <>
+                        <ListItem key={keyName}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                            <TextField
+                              label="Nombre del Certificado"
+                              id={`files.${index}.nameFile`}
+                              name={`files.${index}.nameFile`}
+                              onChange={handleChange}
+                              value={nameFile}
+                            />
+                            <TextField
+                              label="Archivo"
+                              defaultValue={name}
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                            />
+                          </div>
+                          <ListItemSecondaryAction>
+                            <IconButton
+                              edge="end"
+                              aria-label="delete"
+                              id={`files.${index}`}
+                              name={`files.${index}`}
+                              onClick={() => remove(index)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                        <Divider />
+                      </>
                     );
                   })}
-                </>
+                </List>
               )}
             </FieldArray>
             <div className={classes.buttons}>

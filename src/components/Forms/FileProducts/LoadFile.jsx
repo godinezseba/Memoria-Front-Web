@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 
 const propTypes = {
   handleSubmit: PropTypes.func,
@@ -42,14 +42,6 @@ const useStyles = makeStyles((theme) => (
       marginRight: theme.spacing(1),
       fontSize: '12px',
     },
-    bottomText: {
-      fontSize: 'small',
-      fontWeight: 300,
-      lineHeight: 1.4,
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    },
     fileInput: {
       position: 'absolute',
       left: 0,
@@ -88,9 +80,9 @@ export default function LoadFile(props) {
             >
               Seleccione un archivo
             </Button>
-            <span className={internalClasses.bottomText}>
+            <Typography variant="caption">
               {values.file?.name || 'o arrastrelo y sueltelo hasta aquí.'}
-            </span>
+            </Typography>
             <input
               id="file"
               name="file"
