@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Typography, Paper, Tabs, Tab } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { OneProductForm, FileProducts } from '../../components/Forms';
+import useCompany from '../../store/company.store';
+
+import { FileProducts } from '../../components/Forms';
 import CompaniesDummyList from '../../dummyData/dummy';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,31 +32,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProductsForm() {
   const classes = useStyles();
-  const [formSelected, setFormSelected] = useState(0);
+  const [company, { getAll }] = useCompany();
+  const { isLoading, many } = company;
 
-  const handleChange = (_, newValue) => {
-    setFormSelected(newValue);
-  }
+  console.log(company)
+
+  useEffect(() => {
+    getAll();
+  }, []);
 
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
-        <Tabs
-          value={formSelected}
-          indicatorColor="primary"
-          textColor="primary"
-          onChange={handleChange}
-          aria-label="disabled tabs example"
-          variant="fullWidth"
-        >
-          <Tab label="Ingreso masivo" />
-          <Tab label="Ingreso Individual" />
-        </Tabs>
-        { formSelected === 0 ? (
-          <FileProducts companies={CompaniesDummyList} />
+        { isLoading ? (
+          <h1>cargando</h1>
         ) : (
-          <OneProductForm />
-        )}
+          <FileProducts companies={many} />
+        ) }
       </Paper>
     </div>
   );

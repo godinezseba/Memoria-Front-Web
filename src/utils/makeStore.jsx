@@ -13,7 +13,7 @@ export default function makeStore() {
   const Provider = ({ children, initialState = {} }) => {
     const [state, setState] = useImmer(initialState);
 
-    const contextValue = useMemo(() => [state, setState], [state, setState]);
+    const contextValue = useMemo(() => [state, setState], [state]);
 
     return <context.Provider value={contextValue}>{children}</context.Provider>
   };

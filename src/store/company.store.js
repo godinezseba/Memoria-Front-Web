@@ -9,9 +9,9 @@ export default function useCompany() {
       draft.company.isLoading = true;
     });
     return companiesService.getAll()
-      .then((response) => {
+      .then(({ data }) => {
         setState(draft => {
-          draft.company.many = response;
+          draft.company.many = data;
           draft.company.isLoading = false;
         });
       });
@@ -22,8 +22,8 @@ export default function useCompany() {
       draft.company.isLoading = true;
     });
     return companiesService.create()
-      .then((response) => {
-        const newCompanies = company.map((companyValue) => companyValue.id === response.id ? response : companyValue)
+      .then(({ data }) => {
+        const newCompanies = company.map((companyValue) => companyValue.id === data.id ? data : companyValue)
         setState(draft => {
           draft.company.many = newCompanies;
           draft.company.isLoading = false;

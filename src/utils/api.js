@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const NODE_ENV = 'development';
+
+
 export const endpoints = {
-  development: 'localhost:8081/v1',
+  development: 'http://localhost:8081/v1',
 };
 
 export const api = axios.create({
