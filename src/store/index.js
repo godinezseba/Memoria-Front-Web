@@ -7,6 +7,10 @@ export const initialState = {
     one: {},
     many: [],  
   },
+  user: {
+    isLoading: false,
+    user: {},
+  }
 };
 
 export default makeStore();

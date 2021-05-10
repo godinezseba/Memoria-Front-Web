@@ -9,6 +9,18 @@
     "plugin:mdx/recommended",
     "plugin:react-hooks/recommended"
   ],
+  "rules": {
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "components": ["label"],
+        "required": {
+          "some": ["nesting", "id"]
+        },
+        "allowChildren": false
+      }
+    ]
+  },
   "plugins": [
     "react",
     "prettier"
@@ -17,7 +29,8 @@
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "experimentalObjectRestSpread": true
     }
   }
 }
