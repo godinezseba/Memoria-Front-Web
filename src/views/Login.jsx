@@ -1,10 +1,7 @@
-import React from 'react';
-import { Button, TextField, Container } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import GoogleLogin from 'react-google-login';
-import { Formik, Form } from 'formik';
-
-import { DividerWithText } from '../atoms';
+import AppID from 'ibmcloud-appid-js';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -13,90 +10,44 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-  },
-  form: {
     width: '100%',
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
   },
 }));
 
 export default function Login() {
   const classes = useStyles();
 
+  const appId = new AppID();
+
+  const login = async () => {
+    try {
+      const token = await appId.signin();
+      console.log(token);
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    ( async () =>  {
+      try {
+        await appId.init({
+          clientId: 'd6c47e1c-d540-4ea1-a00b-f642da77d426',
+          discoveryEndpoint: 'https://us-south.appid.cloud.ibm.com/oauth/v4/463ecc77-cba1-432f-a5ac-a62a9e795cca/.well-known/openid-configuration',
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    })()
+      .then(() => login())
+      .catch((error) => console.log(error));
+  });
+
   return (
     <Container maxWidth="xs" style={{ height: '100vh' }}>
       <div className={classes.paper}>
-        <Formik
-          initialValues={{
-            email: '',
-            password: '',
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            console.log(values);
-            setTimeout(() => setSubmitting(false), 1000)
-          }}
-          className={classes.form}
-        >
-          {({
-            values,
-            handleChange,
-            isSubmitting,
-            setSubmitting,
-          }) => (
-            <Form>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-                value={values.email}
-                onChange={handleChange}
-                autoFocus
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Contraseña"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={values.password}
-                onChange={handleChange}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={isSubmitting}
-              >
-                Iniciar Sesión
-              </Button>
-              <DividerWithText>tambien puedes</DividerWithText>
-              <GoogleLogin
-                clientId="787505940274-srotvj1sh4mba7o8htl5dk1d825u1v1v.apps.googleusercontent.com"
-                buttonText="Ingresar con Google"
-                theme="dark"
-                cookiePolicy="single_host_origin"
-                onSuccess={(value) => console.log(value)}
-                onRequest={() => setSubmitting(true)}
-                onFailure={(value) => console.log(value)}
-                disabled={isSubmitting}
-              />
-            </Form>
-          )}
-        </Formik>
+        Esta siendo redirigido al sistema de inicio de sesión App ID.
+        <button onClick={login}>Iniciar Sesión</button>
       </div>
     </Container>
   );
