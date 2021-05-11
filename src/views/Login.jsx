@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Container } from '@material-ui/core';
+import { Container, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import AppID from 'ibmcloud-appid-js';
 
-const useStyles = makeStyles((theme) => ({
+import useUser from '../store/user.store';
+
+const useStyles = makeStyles(() => ({
   paper: {
     display: 'flex',
     flexDirection: 'column',
@@ -17,37 +18,22 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
 
-  const appId = new AppID();
+  const [user, { getByAppID }] = useUser();
 
-  const login = async () => {
-    try {
-      const token = await appId.signin();
-      console.log(token);
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  useEffect(() => {
-    ( async () =>  {
-      try {
-        await appId.init({
-          clientId: 'd6c47e1c-d540-4ea1-a00b-f642da77d426',
-          discoveryEndpoint: 'https://us-south.appid.cloud.ibm.com/oauth/v4/463ecc77-cba1-432f-a5ac-a62a9e795cca/.well-known/openid-configuration',
-        })
-      } catch (e) {
-        console.log(e)
-      }
-    })()
-      .then(() => login())
-      .catch((error) => console.log(error));
-  });
+  useEffect(() => getByAppID());
 
   return (
     <Container maxWidth="xs" style={{ height: '100vh' }}>
       <div className={classes.paper}>
-        Esta siendo redirigido al sistema de inicio de sesión App ID.
-        <button onClick={login}>Iniciar Sesión</button>
+        <Typography noWrap>
+          Esta siendo redirigido al sistema de inicio de sesión App ID.
+        </Typography>
+        <Typography noWrap>
+          Si no es asi, por favor haga click en el botón de abajo:
+        </Typography>
+        <Button onClick={getByAppID} variant="contained" color="primary">
+          Iniciar Sesión
+        </Button>
       </div>
     </Container>
   );

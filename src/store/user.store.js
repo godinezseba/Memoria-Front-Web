@@ -1,54 +1,59 @@
 import Store from '.';
-import { companiesService } from '../services';
+import { usersService } from '../services';
 
 export default function useUser() {
   const [{ user }, setState] = Store.useStore();
 
-  const getByEmail = () => {
-    setState(draft => {
-      draft.company.isLoading = true;
-    });
-    return companiesService.getAll()
-      .then(({ data }) => {
+  const getDataByToken = async ({ token = '' }) => {
+    await usersService.getUser({ token })
+      .then((response) => {
+        const {
+          email,
+          family_name: familyName,
+          given_name: givenName,
+        } = response;
         setState(draft => {
-          draft.company.many = data;
-          draft.company.isLoading = false;
+          const { user: { user } } = draft;
+          draft.user.isLoading = false;
+          draft.user.user = {
+            ...user,
+            email,
+            familyName,
+            givenName,
+          };
         });
       });
-  };
+    return usersService.getUserValues({ token })
+      .then((response) => console.log(response));
+  }
 
-  const getByGoogle = () => {
+  const getByAppID = () => {
     setState(draft => {
       draft.user.isLoading = true;
     });
-    return companiesService.getAll()
-      .then(({ data }) => {
+    return usersService.AppIDLogin()
+      .then((response) => {
+        console.log(response)
+        const { accessToken } = response;
         setState(draft => {
-          draft.company.many = data;
-          draft.company.isLoading = false;
+          draft.user.isLoading = false;
+          draft.user.user = {
+            token: accessToken,
+            createdAt: Date.now(),
+          };
         });
-      });
+        window.localStorage.setItem('userToken', accessToken);
+        return accessToken;
+      })
+      .then((token) => getDataByToken({ token }))
+      .catch((err) => console.log(err));
   };
 
-  const create = () => {
-    setState(draft => {
-      draft.company.isLoading = true;
-    });
-    return companiesService.create()
-      .then(({ data }) => {
-        const newCompanies = company.map((companyValue) => companyValue.id === data.id ? data : companyValue)
-        setState(draft => {
-          draft.company.many = newCompanies;
-          draft.company.isLoading = false;
-        });
-      });
-  }
-
   return [
-    company,
+    user,
     {
-      getAll,
-      create,
+      getByAppID,
+      getDataByToken,
     }
   ];
 }
