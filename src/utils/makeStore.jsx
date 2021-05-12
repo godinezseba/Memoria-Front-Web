@@ -10,7 +10,7 @@ const propTypes = {
 export default function makeStore() {
   const context = createContext();
 
-  const Provider = ({ children, initialState = {} }) => {
+  const Provider = ({ children, initialState }) => {
     const [state, setState] = useImmer(initialState);
 
     const contextValue = useMemo(() => [state, setState], [state]);

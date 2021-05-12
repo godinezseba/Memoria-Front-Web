@@ -12,7 +12,7 @@ import USersForm from './views/Users';
  * ex: aisles is the start to /aisles, /aisles/:id and /aisles/history/:id
  * all this paths have:
  * - name (display in sidebar and breadcrumbs),
- * - TODO: access (user access),
+ * - access: user access,
  * - icon (function): display in sidebar,
  * - component: react component to be display,
  * - childrens (the paths that start with this name, like :id or history/:id in aisles)
@@ -39,6 +39,7 @@ const routes = {
     navbar: 'Usuarios',
     component: <USersForm />,
     icon: <Fastfood />,
+    access: 2,
   },
 };
 
