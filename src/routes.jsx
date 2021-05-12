@@ -3,6 +3,8 @@ import { Business, Fastfood } from '@material-ui/icons';
 
 import { CompaniesForm } from './views/Companies';
 import ProductsForm from './views/Products';
+import USersForm from './views/Users';
+
 
 /**
  * STRUCTURE:
@@ -31,6 +33,11 @@ const routes = {
   '/products': {
     navbar: 'Productos',
     component: <ProductsForm />,
+    icon: <Fastfood />,
+  },
+  '/users': {
+    navbar: 'Usuarios',
+    component: <USersForm />,
     icon: <Fastfood />,
   },
 };
