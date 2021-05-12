@@ -52,15 +52,15 @@ const LoadingIndicator = <CircularProgress color="inherit" size={16} />;
 // https://github.com/mui-org/material-ui/blob/next/LICENSE
 // this package use @material-ui/core@5.0.0, so @MUI/lab break the style
 // in this proyect, because this proyect use MU/core@4.0.0, thats why I copy/paste the code to my proyect
-const LoadingButton = React.forwardRef(function LoadingButton(props, ref) {
+const LoadingButton = React.forwardRef((props, ref) => {
   const {
     children,
     classes,
     className,
-    disabled = false,
-    loading = false,
-    loadingIndicator = LoadingIndicator,
-    loadingPosition = 'center',
+    disabled,
+    loading,
+    loadingIndicator,
+    loadingPosition,
     ...other
   } = props;
 
@@ -106,7 +106,11 @@ LoadingButton.propTypes /* remove-proptypes */ = {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes: PropTypes.object,
+  classes: PropTypes.shape({
+    root: PropTypes.string,
+    loading: PropTypes.string,
+    loadingIndicator: PropTypes.string,
+  }),
   /**
    * @ignore
    */
@@ -144,5 +148,15 @@ LoadingButton.propTypes /* remove-proptypes */ = {
     return null;
   }),
 };
+
+LoadingButton.defaultProps = {
+  children: () => {},
+  classes: {},
+  className: '',
+  disabled: false,
+  loading: false,
+  loadingIndicator: LoadingIndicator,
+  loadingPosition: 'center',
+}
 
 export default withStyles(styles, { name: 'MuiLoadingButton' })(LoadingButton);

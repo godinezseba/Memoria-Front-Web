@@ -34,8 +34,6 @@ export default function ProductsForm() {
   const [company, { getAll }] = useCompany();
   const { isLoading, many } = company;
 
-  console.log(company)
-
   useEffect(() => {
     getAll();
   }, []);
