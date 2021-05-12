@@ -23,13 +23,6 @@ import StickyFooter from './Footer';
 
 import { getSidebatPaths } from '../routes';
 
-const propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-  children: PropTypes.func.isRequired,
-};
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -173,6 +166,11 @@ const SideBar = ({ history, children }) => {
   );
 };
 
-SideBar.propTypes = propTypes;
+SideBar.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  children: PropTypes.element.isRequired,
+};
 
 export default withRouter(SideBar);
