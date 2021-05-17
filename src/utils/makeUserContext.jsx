@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import firebase from 'firebase/app';
 import PropTypes from 'prop-types';
 
+import { Loading } from '../atoms';
+
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -17,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   if(pending){
-    return <>Loading...</>
+    return <Loading />
   }
 
   return (

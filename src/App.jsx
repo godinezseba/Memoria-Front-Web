@@ -9,17 +9,19 @@ import { AuthProvider } from './utils/makeUserContext';
 import Store, { initialState } from './store';
 
 const App = () => (
-  <AuthProvider>
-    <Store.Provider initialState={initialState}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route path="/" component={Layout} />
-        </Switch>
-      </BrowserRouter>
-    </Store.Provider>
-  </AuthProvider>
+  <div style={{ height: '100vh' }}>
+    <CssBaseline />
+    <AuthProvider>
+      <Store.Provider initialState={initialState}>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route path="/" component={Layout} />
+          </Switch>
+        </BrowserRouter>
+      </Store.Provider>
+    </AuthProvider>
+  </div>
 );
 
 export default App;
