@@ -1,4 +1,4 @@
-import makeStore from '../utils/makeStore';
+import makeStore from './makeStore';
 
 export const initialState = {
   company: {

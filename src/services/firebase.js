@@ -10,5 +10,3 @@ firebase.initializeApp({
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 });
-
-console.log('entre')

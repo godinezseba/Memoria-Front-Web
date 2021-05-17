@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Layout from './layout';
 import { Login } from './views';
 
-import { AuthProvider } from './utils/makeUserContext';
+import { AuthProvider } from './store/makeUserContext';
 import Store, { initialState } from './store';
 
 const App = () => (

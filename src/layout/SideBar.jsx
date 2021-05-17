@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
 import StickyFooter from './Footer';
 
 import { getSidebatPaths } from '../routes';
-import { AuthContext } from '../utils/makeUserContext';
+import { AuthContext } from '../store/makeUserContext';
 
 const drawerWidth = 240;
 
@@ -190,7 +190,7 @@ const SideBar = ({ history, children }) => {
               </Menu>
             </Box>
           ) : (
-            <Button onClick={() => history.push('/login')} variant="contained" color="primary"> Iniciar Sesión </Button>
+            <Button onClick={() => history.push('/login')} color="inherit"> Iniciar Sesión </Button>
           )}
         </Toolbar>
       </AppBar>
