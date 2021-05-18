@@ -29,6 +29,7 @@ import StickyFooter from './Footer';
 
 import { getSidebatPaths } from '../routes';
 import { AuthContext } from '../store/makeUserContext';
+import { signOut } from '../utils';
 
 const drawerWidth = 240;
 
@@ -127,7 +128,7 @@ const SideBar = ({ history, children }) => {
     
     switch (value) {
       case 0:
-        history.push('/logout');
+        signOut({ history });
         break;
 
       default:
