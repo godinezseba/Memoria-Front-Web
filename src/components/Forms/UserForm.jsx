@@ -39,9 +39,11 @@ export default function UserForm(props) {
     <Formik
       enableReinitialize
       initialValues={initialValues}
-      onSubmit={(values) => {
-        console.log(values);
-        handleSubmit(values);
+      onSubmit={(values, actions) => {
+        handleSubmit(values)
+          .then((value) => console.log(value))
+          .catch((error) => console.log(error))
+          .finally(() => actions.setSubmitting(false));
       }}
     >
       {({

@@ -15,8 +15,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-console.log(firebase)
-
 // Configure FirebaseUI.
 const uiConfig = {
   // Popup signin flow rather than redirect flow.

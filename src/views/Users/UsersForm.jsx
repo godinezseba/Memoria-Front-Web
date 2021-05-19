@@ -6,6 +6,7 @@ import { UserForm } from '../../components/Forms';
 import { Loading } from '../../atoms';
 
 import useCompany from '../../store/company.store';
+import useUser from '../../store/user.store';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CompaniesForm() {
   const classes = useStyles();
   const [company, { getAll }] = useCompany();
+  const [user, { create }] = useUser();
   const { isLoading, many } = company;
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export default function CompaniesForm() {
         { isLoading ? (
           <Loading />
         ) : (
-          <UserForm companies={many} />
+          <UserForm companies={many} handleSubmit={create}/>
         ) }
       </Paper>
     </div>

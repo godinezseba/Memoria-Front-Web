@@ -9,7 +9,9 @@ export const initialState = {
   },
   user: {
     isLoading: false,
-    user: {},
+    isError: false,
+    many: {},
+    one: {},
   }
 };
 
