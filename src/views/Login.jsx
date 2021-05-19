@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Container, Typography, Button } from '@material-ui/core';
+import React from 'react';
+import { Container } from '@material-ui/core';
 import firebase from 'firebase/app';
 import { makeStyles } from '@material-ui/core/styles';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';

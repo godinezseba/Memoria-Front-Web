@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import firebase from 'firebase/app';
 import PropTypes from 'prop-types';
 
-import { Loading } from '../atoms';
+import Loading from '../atoms/Loading';
 
 export const AuthContext = React.createContext();
 
