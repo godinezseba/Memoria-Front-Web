@@ -23,7 +23,7 @@ export default function useCompany() {
     });
     return companiesService.create()
       .then(({ data }) => {
-        const newCompanies = company.map((companyValue) => companyValue.id === data.id ? data : companyValue)
+        const newCompanies = [...company.many, data];
         setState(draft => {
           draft.company.many = newCompanies;
           draft.company.isLoading = false;

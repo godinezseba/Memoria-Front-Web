@@ -1,10 +1,15 @@
 import { api } from './api';
+import { getToken } from '../utils';
 
 const baseURL = 'company';
 
 const getAll = () => api.get(baseURL);
 
-const create = (data) => api.post(baseURL, data);
+const create = async (data) => {
+  const token = await getToken();
+  console.log(token);
+  return api.post(baseURL, data, { headers: { 'Authorization': token } });
+};
 
 const service = {
   getAll,

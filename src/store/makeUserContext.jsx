@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
     // because we want to update the tree with this new result
     // this value is saved in the context
     firebase.auth().onAuthStateChanged((user) => {
-      console.log('[login] current user:', user)
       setCurrentUser(user);
       setPending(false);
     });

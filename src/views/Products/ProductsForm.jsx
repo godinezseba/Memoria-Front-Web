@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import useCompany from '../../store/company.store';
-
 import { FileProducts } from '../../components/Forms';
+import { Loading } from '../../atoms';
+
+import useCompany from '../../store/company.store';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -42,7 +43,7 @@ export default function ProductsForm() {
     <div className={classes.layout}>
       <Paper className={classes.paper}>
         { isLoading ? (
-          <h1>cargando</h1>
+          <Loading />
         ) : (
           <FileProducts companies={many} />
         ) }
