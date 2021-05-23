@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { FileProducts } from '../../components/Forms';
+import { UserForm } from '../../components/Forms';
 import { Loading } from '../../atoms';
 
 import useCompany from '../../store/company.store';
+import useUser from '../../store/user.store';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -30,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductsForm() {
+export default function CompaniesForm() {
   const classes = useStyles();
   const [company, { getAll }] = useCompany();
+  const [user, { create }] = useUser();
   const { isLoading, many } = company;
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export default function ProductsForm() {
         { isLoading ? (
           <Loading />
         ) : (
-          <FileProducts companies={many} />
+          <UserForm companies={many} handleSubmit={create}/>
         ) }
       </Paper>
     </div>

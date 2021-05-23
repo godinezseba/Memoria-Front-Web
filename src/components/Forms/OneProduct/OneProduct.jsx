@@ -63,7 +63,7 @@ export default function OneProduct({initialValues}) {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values, actions) => {
+      onSubmit={(values) => {
         console.log(values);
       }}
     >

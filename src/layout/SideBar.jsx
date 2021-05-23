@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Apps from '@material-ui/icons/Apps';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import {
   makeStyles,
   AppBar,
@@ -15,6 +16,11 @@ import {
   IconButton,
   Divider,
   Container,
+  Typography,
+  Menu,
+  MenuItem,
+  Box,
+  Button,
 } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
@@ -22,13 +28,8 @@ import PropTypes from 'prop-types';
 import StickyFooter from './Footer';
 
 import { getSidebatPaths } from '../routes';
-
-const propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-  children: PropTypes.func.isRequired,
-};
+import { AuthContext } from '../store/makeUserContext';
+import { signOut } from '../utils';
 
 const drawerWidth = 240;
 
@@ -106,12 +107,35 @@ const useStyles = makeStyles((theme) => ({
 
 const SideBar = ({ history, children }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+  const { data: { name, lastName } } = currentUser || {};
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event) => {
+    const { target: { value } } = event;
+    
+    switch (value) {
+      case 0:
+        signOut({ history });
+        break;
+
+      default:
+        break;
+    }
+
+    setAnchorEl(null);
   };
 
   return (
@@ -133,6 +157,42 @@ const SideBar = ({ history, children }) => {
           >
             <MenuIcon />
           </IconButton>
+          <Box  flexGrow="1"/>
+          {!!currentUser ? (
+            <Box display="flex" alignItems="center" justifyContent="end">
+              <Typography variant="subtitle1" className={classes.title}>
+                {`${name} ${lastName || ''}`}
+              </Typography>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Button onClick={() => history.push('/login')} color="inherit"> Iniciar Sesión </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -173,6 +233,11 @@ const SideBar = ({ history, children }) => {
   );
 };
 
-SideBar.propTypes = propTypes;
+SideBar.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  children: PropTypes.element.isRequired,
+};
 
 export default withRouter(SideBar);

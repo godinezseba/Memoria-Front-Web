@@ -9,29 +9,6 @@ import {
 import PropTypes from 'prop-types';
 import { Formik, Form, FieldArray } from 'formik';
 
-const propTypes = {
-  initialValues: PropTypes.shape({
-    name: PropTypes.string,
-    country: PropTypes.string,
-    carbonFootPrint: PropTypes.string,
-    actions: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-      file: PropTypes.shape({}),
-      description: PropTypes.string,
-    })),
-    certificates: PropTypes.arrayOf(PropTypes.shape({}))
-  }),
-  handleSubmit: PropTypes.func,
-}
-
-const defaultProps = {
-  initialValues: {
-    actions: [],
-    certificates: [],
-  },
-  handleSubmit: () => {},
-}
-
 const useStyles = makeStyles((theme) => ({
   buttons: {
     display: 'flex',
@@ -242,5 +219,25 @@ export default function CompanyForm(props) {
   );
 }
 
-CompanyForm.propTypes = propTypes;
-CompanyForm.defaultProps = defaultProps;
+CompanyForm.propTypes = {
+  initialValues: PropTypes.shape({
+    name: PropTypes.string,
+    country: PropTypes.string,
+    carbonFootPrint: PropTypes.string,
+    actions: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      file: PropTypes.shape({}),
+      description: PropTypes.string,
+    })),
+    certificates: PropTypes.arrayOf(PropTypes.shape({}))
+  }),
+  handleSubmit: PropTypes.func,
+}
+
+CompanyForm.defaultProps = {
+  initialValues: {
+    actions: [],
+    certificates: [],
+  },
+  handleSubmit: () => {},
+}

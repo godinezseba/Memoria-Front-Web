@@ -1,9 +1,7 @@
 import { api } from './api';
 import { getToken } from '../utils';
 
-const baseURL = 'company';
-
-const getAll = () => api.get(baseURL);
+const baseURL = 'user';
 
 const create = async (data) => {
   const token = await getToken();
@@ -11,9 +9,14 @@ const create = async (data) => {
   return api.post(baseURL, data, { headers: { 'Authorization': token } });
 };
 
+const getData = async () => {
+  const token = await getToken();
+  return api.get(baseURL, { headers: { 'Authorization': token } });
+}
+
 const service = {
-  getAll,
   create,
+  getData,
 };
 
 export default service;
