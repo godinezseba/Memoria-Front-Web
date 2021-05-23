@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import PropTypes from 'prop-types';
 
 import Loading from '../atoms/Loading';
+import { usersService } from '../services';
 
 export const AuthContext = React.createContext();
 
@@ -15,8 +16,19 @@ export const AuthProvider = ({ children }) => {
     // because we want to update the tree with this new result
     // this value is saved in the context
     firebase.auth().onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setPending(false);
+      if (user) {
+        usersService.getData()
+          .then(({ data }) => {
+            setCurrentUser({
+              user,
+              data,
+            });
+          })
+          .catch((erro) => console.log(erro))
+          .finally(() => setPending(false));
+      } else {
+        setPending(false);
+      }
     });
   }, []);
 
