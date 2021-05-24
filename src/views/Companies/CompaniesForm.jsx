@@ -30,10 +30,14 @@ const useStyles = makeStyles((theme) => ({
 export default function CompaniesForm() {
   const classes = useStyles();
 
+  const handleSubmit = (values) => {
+    console.log('submit', values);
+  }
+
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
-        <CompanyForm />
+        <CompanyForm handleSubmit={handleSubmit} />
       </Paper>
     </div>
   );
