@@ -39,9 +39,9 @@ export default function CompanyForm(props) {
       {({
         values,
         handleChange,
+        setFieldValue,
       }) => (
         <Form>
-          {console.log('inside form', values)}
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
@@ -121,7 +121,7 @@ export default function CompanyForm(props) {
                                 name={`actions.${key}.file`}
                                 type="file"
                                 value={file}
-                                onChange={handleChange}
+                                onChange={({ currentTarget }) => setFieldValue(`actions.${key}.file`, currentTarget.files[0])}
                                 hidden
                               />
                             </Button>
@@ -193,7 +193,7 @@ export default function CompanyForm(props) {
                                 name={`certificates.${key}.file`}
                                 type="file"
                                 value={file}
-                                onChange={handleChange}
+                                onChange={({ currentTarget }) => setFieldValue(`certificates.${key}.file`, currentTarget.files[0])}
                                 hidden
                               />
                             </Button>

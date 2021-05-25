@@ -7,7 +7,6 @@ const getAll = () => api.get(baseURL);
 
 const create = async (data) => {
   const token = await getToken();
-  console.log(token);
   return api.post(baseURL, data, { headers: { 'Authorization': token } });
 };
 

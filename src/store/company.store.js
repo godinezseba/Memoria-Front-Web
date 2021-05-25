@@ -17,11 +17,11 @@ export default function useCompany() {
       });
   };
 
-  const create = () => {
+  const create = (newCompany) => {
     setState(draft => {
       draft.company.isLoading = true;
     });
-    return companiesService.create()
+    return companiesService.create(newCompany)
       .then(({ data }) => {
         const newCompanies = [...company.many, data];
         setState(draft => {
