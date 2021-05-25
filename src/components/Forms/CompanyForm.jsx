@@ -70,7 +70,7 @@ export default function CompanyForm(props) {
                 name="carbonFootPrint"
                 label="Huella de Carbono"
                 fullWidth
-                value={values.name}
+                value={values.carbonFootPrint}
                 onChange={handleChange}
                 helperText="Considere todos los gases emitidos durante todo el año."
               />
@@ -82,7 +82,7 @@ export default function CompanyForm(props) {
               </Typography>
               <Typography variant="body2" align="center" paragraph>
                 A continuación ingrese las acciones que realiza la empresa para
-                disminuir su contaminación producida.
+                disminuir las distintas emisiones generadas.
               </Typography>
             </Grid>
             <FieldArray name="actions">
@@ -90,11 +90,9 @@ export default function CompanyForm(props) {
                 <>
                   <Grid item xs={12}>
                     <Button
-                      id="submit"
-                      type="submit"
                       color="secondary"
                       variant="outlined"
-                      onClick={() => push({})}
+                      onClick={() => push({ name: '', description: '' })}
                     >
                       Agregar
                     </Button>
@@ -102,7 +100,6 @@ export default function CompanyForm(props) {
                   {values.actions?.map((action, key) => {
                     const { name, file, description } = action;
                     const actionKeyName = `${name}-${key}`;
-
                     return (
                       <Fragment key={actionKeyName}>
                         <Grid item xs={12} sm={6}>
@@ -116,15 +113,23 @@ export default function CompanyForm(props) {
                           />
                         </Grid>
                         <Grid item xs={12} sm={6} justify="center" container>
-                          <Button
-                            id={`actions.${key}.file`}
-                            name={`actions.${key}.file`}
-                            component="label"
-                            variant="outlined"
-                          >
-                            Adjuntar Archivo
-                            <input type="file" onChange={handleChange} hidden/>
-                          </Button>
+                          {!file ? (
+                            <Button component="label" variant="outlined" color="primary">
+                              Adjuntar Archivo
+                              <input
+                                id={`actions.${key}.file`}
+                                name={`actions.${key}.file`}
+                                type="file"
+                                value={file}
+                                onChange={({ currentTarget }) => setFieldValue(`actions.${key}.file`, currentTarget.files[0])}
+                                hidden
+                              />
+                            </Button>
+                          ) : (
+                            <Button component="label" variant="outlined" onClick={() => remove(key)}>
+                              Eliminar Archivo
+                            </Button>
+                          )}
                         </Grid>
                         <Grid item xs={12}>
                           <TextField
@@ -157,21 +162,18 @@ export default function CompanyForm(props) {
                 <>
                   <Grid item xs={12}>
                     <Button
-                      id="submit"
-                      type="submit"
                       color="secondary"
                       variant="outlined"
-                      onClick={() => push({})}
+                      onClick={() => push({ name: '' })}
                     >
                       Agregar
                     </Button>
                   </Grid>
-                  {values.certificates?.map((action, key) => {
-                    const { name, file, description } = action;
-                    const actionKeyName = `${name}-${key}`;
-
+                  {values.certificates?.map((certificate, key) => {
+                    const { name, file } = certificate;
+                    const certificateKeyName = `${name}-${key}`;
                     return (
-                      <Fragment key={actionKeyName}>
+                      <Fragment key={certificateKeyName}>
                         <Grid item xs={12} sm={6}>
                           <TextField
                             id={`certificates.${key}.name`}
@@ -183,15 +185,23 @@ export default function CompanyForm(props) {
                           />
                         </Grid>
                         <Grid item xs={12} sm={6} justify="center" container>
-                          <Button
-                            id={`certificates.${key}.file`}
-                            name={`certificates.${key}.file`}
-                            component="label"
-                            variant="outlined"
-                          >
-                            Adjuntar Archivo
-                            <input type="file" onChange={handleChange} hidden/>
-                          </Button>
+                          {!file ? (
+                            <Button component="label" variant="outlined" color="primary">
+                              Adjuntar Archivo
+                              <input
+                                id={`certificates.${key}.file`}
+                                name={`certificates.${key}.file`}
+                                type="file"
+                                value={file}
+                                onChange={({ currentTarget }) => setFieldValue(`certificates.${key}.file`, currentTarget.files[0])}
+                                hidden
+                              />
+                            </Button>
+                          ) : (
+                            <Button component="label" variant="outlined" onClick={() => remove(key)}>
+                              Eliminar Archivo
+                            </Button>
+                          )}
                         </Grid>
                       </Fragment>
                     );
@@ -222,20 +232,24 @@ export default function CompanyForm(props) {
 CompanyForm.propTypes = {
   initialValues: PropTypes.shape({
     name: PropTypes.string,
-    country: PropTypes.string,
     carbonFootPrint: PropTypes.string,
     actions: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       file: PropTypes.shape({}),
       description: PropTypes.string,
     })),
-    certificates: PropTypes.arrayOf(PropTypes.shape({}))
+    certificates: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      file: PropTypes.shape({}),
+    }))
   }),
   handleSubmit: PropTypes.func,
 }
 
 CompanyForm.defaultProps = {
   initialValues: {
+    name: '',
+    carbonFootPrint: '',
     actions: [],
     certificates: [],
   },

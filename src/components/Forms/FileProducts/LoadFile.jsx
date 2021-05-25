@@ -88,7 +88,7 @@ export default function LoadFile(props) {
               name="file"
               className={internalClasses.fileInput}
               type="file"
-              onChange={(event) => setFieldValue('file', event.currentTarget.files[0])}
+              onChange={({ currentTarget }) => setFieldValue('file', currentTarget.files[0])}
             />
           </div>
           <div className={classes.buttons}>

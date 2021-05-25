@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { CompanyForm } from '../../components/Forms';
 
+import useCompany from '../../store/company.store';
+import { mapToBase64 } from '../../utils';
+
 const useStyles = makeStyles((theme) => ({
   layout: {
     width: 'auto',
@@ -29,11 +32,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CompaniesForm() {
   const classes = useStyles();
+  const [company, { create }] = useCompany();
+
+  const handleSubmit = async (values) => {
+    const newCompany = values;
+    const { actions, certificates } = values;
+    newCompany.actions = await mapToBase64(actions);
+    newCompany.certificates = await mapToBase64(certificates);
+    console.log('submit', values);
+    return create(values);
+  }
 
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
-        <CompanyForm />
+        <CompanyForm handleSubmit={handleSubmit} />
       </Paper>
     </div>
   );
