@@ -3,25 +3,6 @@ import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import { Button, makeStyles, Typography } from '@material-ui/core';
 
-const propTypes = {
-  handleSubmit: PropTypes.func,
-  handleBack: PropTypes.func,
-  classes: PropTypes.shape({
-    buttons: PropTypes.string,
-    button: PropTypes.string,
-  }),
-  initialValues: PropTypes.shape({
-    file: PropTypes.shape({}),
-  }),
-}
-
-const defaultProps = {
-  handleSubmit: () => {},
-  handleBack: () => {},
-  classes: {},
-  initialValues: {},
-}
-
 const useStyles = makeStyles((theme) => (
   {
     fileDropArea: {
@@ -111,5 +92,21 @@ export default function LoadFile(props) {
   );
 }
 
-LoadFile.propTypes = propTypes;
-LoadFile.defaultProps = defaultProps;
+LoadFile.propTypes = {
+  handleSubmit: PropTypes.func,
+  handleBack: PropTypes.func,
+  classes: PropTypes.shape({
+    buttons: PropTypes.string,
+    button: PropTypes.string,
+  }),
+  initialValues: PropTypes.shape({
+    file: PropTypes.shape({}),
+  }),
+}
+
+LoadFile.defaultProps = {
+  handleSubmit: () => {},
+  handleBack: () => {},
+  classes: {},
+  initialValues: {},
+}

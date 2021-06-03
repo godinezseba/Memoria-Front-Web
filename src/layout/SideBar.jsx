@@ -110,7 +110,7 @@ const SideBar = ({ history, children }) => {
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const { currentUser } = useContext(AuthContext);
-  const { data: { name, lastName } } = currentUser || {};
+  const { data: { name, lastName } = {} } = currentUser || { };
 
   const handleDrawerOpen = () => {
     setOpen(true);

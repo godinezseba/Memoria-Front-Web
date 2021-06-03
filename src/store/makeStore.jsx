@@ -2,11 +2,6 @@ import React, { useMemo, useContext, createContext } from 'react';
 import { useImmer } from 'use-immer';
 import PropTypes from 'prop-types';
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  initialState: PropTypes.shape({}).isRequired,
-}
-
 export default function makeStore() {
   const context = createContext();
 
@@ -26,4 +21,9 @@ export default function makeStore() {
     Provider,
     useStore,
   }
+}
+
+const propTypes = {
+  children: PropTypes.node.isRequired,
+  initialState: PropTypes.shape({}).isRequired,
 }

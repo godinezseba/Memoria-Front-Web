@@ -5,13 +5,19 @@ export const initialState = {
     isLoading: false,
     isError: false,
     one: {},
-    many: [],  
+    many: [],
   },
   user: {
     isLoading: false,
     isError: false,
     many: {},
     one: {},
+  },
+  product: {
+    isLoading: false,
+    isError: false,
+    one: {},
+    many: [],
   }
 };
 

@@ -37,6 +37,7 @@ export default function CompaniesForm() {
   const handleSubmit = async (values) => {
     const newCompany = values;
     const { actions, certificates } = values;
+
     newCompany.actions = await mapToBase64(actions);
     newCompany.certificates = await mapToBase64(certificates);
     console.log('submit', values);
