@@ -8,12 +8,14 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { FileForm, LoadFile, CertificateForm } from '../../components/Forms';
-import { Loading } from '../../atoms';
+import CertificateForm from './LoadCertificatePart';
+import LoadFile from './LoadFilePart';
+import ValuesPart from './ValuesPart';
+import { Loading } from '$atoms';
 
-import useCompany from '../../store/company.store';
-import useProduct from '../../store/product.store';
-import { toBase64 } from '../../utils';
+import useCompany from '$store/company.store';
+import useProduct from '$store/product.store';
+import { toBase64 } from '$utils';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -113,7 +115,7 @@ export default function ProductsForm() {
 
   const stepContent = {
     0: (
-      <FileForm
+      <ValuesPart
         initialValues={metaData}
         companies={many}
         classes={classes}

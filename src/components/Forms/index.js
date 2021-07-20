@@ -7,5 +7,3 @@ export {
   CompanyForm,
   UserForm,
 };
-
-export * from './FileProducts';
