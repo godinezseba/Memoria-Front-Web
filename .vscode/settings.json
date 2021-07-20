@@ -1,6 +1,7 @@
 {
   "conventionalCommits.scopes": [
     "login",
-    "company-form"
+    "company-form",
+    "product-form"
   ]
 }

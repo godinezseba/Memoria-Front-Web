@@ -13,25 +13,6 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const propTypes = {
-  handleSubmit: PropTypes.func,
-  classes: PropTypes.shape({
-    buttons: PropTypes.string,
-    button: PropTypes.string,
-  }),
-  initialValues: PropTypes.shape({
-    files: PropTypes.arrayOf(PropTypes.shape({})),
-  }),
-}
-
-const defaultProps = {
-  handleSubmit: () => {},
-  classes: {},
-  initialValues: {
-    files: [],
-  },
-}
-
 export default function CertificateForm(props) {
   const {
     initialValues,
@@ -138,5 +119,21 @@ export default function CertificateForm(props) {
   );
 }
 
-CertificateForm.propTypes = propTypes;
-CertificateForm.defaultProps = defaultProps;
+CertificateForm.propTypes = {
+  handleSubmit: PropTypes.func,
+  classes: PropTypes.shape({
+    buttons: PropTypes.string,
+    button: PropTypes.string,
+  }),
+  initialValues: PropTypes.shape({
+    files: PropTypes.arrayOf(PropTypes.shape({})),
+  }),
+}
+
+CertificateForm.defaultProps = {
+  handleSubmit: () => {},
+  classes: {},
+  initialValues: {
+    files: [],
+  },
+}

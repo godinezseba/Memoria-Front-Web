@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import Apps from '@material-ui/icons/Apps';
+import Fastfood from '@material-ui/icons/Fastfood';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {
   makeStyles,
@@ -110,7 +110,7 @@ const SideBar = ({ history, children }) => {
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const { currentUser } = useContext(AuthContext);
-  const { data: { name, lastName } } = currentUser || {};
+  const { data: { name, lastName } = {} } = currentUser || {};
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -125,7 +125,7 @@ const SideBar = ({ history, children }) => {
 
   const handleClose = (event) => {
     const { target: { value } } = event;
-    
+
     switch (value) {
       case 0:
         signOut({ history });
@@ -157,7 +157,7 @@ const SideBar = ({ history, children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Box  flexGrow="1"/>
+          <Box flexGrow="1" />
           {!!currentUser ? (
             <Box display="flex" alignItems="center" justifyContent="end">
               <Typography variant="subtitle1" className={classes.title}>
@@ -210,7 +210,7 @@ const SideBar = ({ history, children }) => {
         <Divider />
         <List>
           {getSidebatPaths().map((route, key) => {
-            const { navbar, icon = <Apps />, path } = route;
+            const { navbar, icon = <Fastfood />, path } = route;
             const keyName = `${navbar}-${key}`;
 
             return (

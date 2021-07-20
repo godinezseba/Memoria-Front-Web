@@ -13,38 +13,6 @@ import { Autocomplete } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 
-const propTypes = {
-  initialValues: PropTypes.shape({
-    company: PropTypes.shape({}),
-    fileType: PropTypes.string,
-    separator: PropTypes.string,
-    nameColumn: PropTypes.string,
-    barCodeColumn: PropTypes.string,
-    idColumn: PropTypes.string,
-    co2Column: PropTypes.number,
-    waterColumn: PropTypes.number,
-  }),
-  handleSubmit: PropTypes.func,
-  companies: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  })),
-  classes: PropTypes.shape({
-    buttons: PropTypes.string,
-    button: PropTypes.string,
-  }),
-}
-
-const defaultProps = {
-  initialValues: {
-    company: {},
-    separator: ',',
-  },
-  companies: [],
-  handleSubmit: () => {},
-  classes: {},
-}
-
 export default function FileForm(props) {
   const {
     initialValues,
@@ -74,17 +42,17 @@ export default function FileForm(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Autocomplete
-                id="company"
-                name="company"
+                id="companyId"
+                name="companyId"
                 options={companies}
-                onChange={(e, value) => setFieldValue('company', value || initialValues.company)}
-                value={values.company}
+                onChange={(e, value) => setFieldValue('companyId', value?._id)}
+                value={companies.find(({ _id }) => _id === values.companyId )}
                 getOptionLabel={(option) => option?.name || ''}
-                renderInput={(params) => <TextField {...params} id="company-input" name="company-input" label="Empresa" required />}
+                renderInput={(params) => <TextField {...params} id="companyId-input" name="companyId-input" label="Empresa" required />}
               />
             </Grid>
             <Grid item xs={12} sm={6}/>
-            { !!values.company?._id && (
+            { !!values.companyId && (
               <>
                 <Grid item xs={12}>
                   <Typography variant="body2" align="center" paragraph>
@@ -134,11 +102,11 @@ export default function FileForm(props) {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
-                    id="nameColumn"
-                    name="nameColumn"
+                    id="columns.name"
+                    name="columns.name"
                     label="Nombres"
                     fullWidth
-                    value={values.nameColumn}
+                    value={values.columns.name}
                     onChange={handleChange}
                     helperText="Nombre del Producto"
                   />
@@ -147,22 +115,22 @@ export default function FileForm(props) {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
-                    id="barCodeColumn"
-                    name="barCodeColumn"
+                    id="columns.barCode"
+                    name="columns.barCode"
                     label="Código de Barras del Producto"
                     fullWidth
-                    value={values.barCodeColumn}
+                    value={values.columns.barCodeColumn}
                     onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={6}/>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="co2Column"
-                    name="co2Column"
+                    id="columns.CO2"
+                    name="columns.CO2"
                     label="Huella de Carbono"
                     fullWidth
-                    value={values.co2Column}
+                    value={values.columns.CO2}
                     onChange={handleChange}
                     helperText="Considerando la producción de mil productos."
                   />
@@ -171,11 +139,11 @@ export default function FileForm(props) {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
-                    id="waterColumn"
-                    name="waterColumn"
+                    id="columns.water"
+                    name="columns.water"
                     label="Huella Hídrica"
                     fullWidth
-                    value={values.waterColumn}
+                    value={values.columns.water}
                     onChange={handleChange}
                     helperText="Considerando la producción de mil productos."
                   />
@@ -183,11 +151,11 @@ export default function FileForm(props) {
                 <Grid item xs={6}/>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="idColumn"
-                    name="idColumn"
+                    id="columns.externalId"
+                    name="columns.externalId"
                     label="Identificador único"
                     fullWidth
-                    value={values.idColumn}
+                    value={values.columns.externalId}
                     onChange={handleChange}
                     helperText="Identificador utilizado para este producto (opcional)."
                   />
@@ -215,5 +183,44 @@ export default function FileForm(props) {
   );
 }
 
-FileForm.propTypes = propTypes;
-FileForm.defaultProps = defaultProps;
+FileForm.propTypes = {
+  initialValues: PropTypes.shape({
+    companyId: PropTypes.string,
+    fileType: PropTypes.string,
+    separator: PropTypes.string,
+    columns: PropTypes.shape({
+      name: PropTypes.string,
+      barCode: PropTypes.string,
+      externalId: PropTypes.string,
+      CO2: PropTypes.string,
+      water: PropTypes.string,
+    }),
+  }),
+  handleSubmit: PropTypes.func,
+  companies: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
+  classes: PropTypes.shape({
+    buttons: PropTypes.string,
+    button: PropTypes.string,
+  }),
+}
+
+FileForm.defaultProps = {
+  initialValues: {
+    companyId: '',
+    fileType: 'csv',
+    separator: ',',
+    columns: {
+      name: '',
+      barCode: '',
+      externalId: '',
+      CO2: '',
+      water: '',
+    }
+  },
+  companies: [],
+  handleSubmit: () => {},
+  classes: {},
+}
