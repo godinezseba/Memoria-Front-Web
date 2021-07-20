@@ -2,10 +2,10 @@ import React from 'react';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { CompanyForm } from '../../components/Forms';
+import { CompanyForm } from '$components/Forms';
 
-import useCompany from '../../store/company.store';
-import { mapToBase64 } from '../../utils';
+import useCompany from '$store/company.store';
+import { mapToBase64 } from '$utils';
 
 const useStyles = makeStyles((theme) => ({
   layout: {

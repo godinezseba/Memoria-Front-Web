@@ -1,9 +1,9 @@
 import React from 'react';
 import { Business, Fastfood, PersonAdd } from '@material-ui/icons';
 
-import { CompaniesForm } from './views/Companies';
-import ProductsForm from './views/Products';
-import USersForm from './views/Users';
+import { CompaniesForm } from '$views/Companies';
+import ProductsForm from '$views/Products';
+import USersForm from '$views/Users';
 
 
 /**

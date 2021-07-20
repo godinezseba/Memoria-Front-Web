@@ -2,11 +2,11 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Layout from './layout';
-import { Login } from './views';
+import Layout from '$layout';
+import { Login } from '$views';
 
-import { AuthProvider } from './store/makeUserContext';
-import Store, { initialState } from './store';
+import { AuthProvider } from '$store/makeUserContext';
+import Store, { initialState } from '$store';
 
 const App = () => (
   <div style={{ height: '100vh' }}>

@@ -28,8 +28,8 @@ import PropTypes from 'prop-types';
 import StickyFooter from './Footer';
 
 import { getSidebatPaths } from '../routes';
-import { AuthContext } from '../store/makeUserContext';
-import { signOut } from '../utils';
+import { AuthContext } from '$store/makeUserContext';
+import { signOut } from '$utils';
 
 const drawerWidth = 240;
 

@@ -1,5 +1,5 @@
 import { api } from './api';
-import { getToken } from '../utils';
+import { getToken } from '$utils';
 
 const baseURL = 'product';
 

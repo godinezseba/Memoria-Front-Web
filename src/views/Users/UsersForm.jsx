@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { UserForm } from '../../components/Forms';
-import { Loading } from '../../atoms';
+import { UserForm } from '$components/Forms';
+import { Loading } from '$atoms';
 
-import useCompany from '../../store/company.store';
-import useUser from '../../store/user.store';
+import useCompany from '$store/company.store';
+import useUser from '$store/user.store';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -44,11 +44,11 @@ export default function CompaniesForm() {
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
-        { isLoading ? (
+        {isLoading ? (
           <Loading />
         ) : (
-          <UserForm companies={many} handleSubmit={create}/>
-        ) }
+          <UserForm companies={many} handleSubmit={create} />
+        )}
       </Paper>
     </div>
   );

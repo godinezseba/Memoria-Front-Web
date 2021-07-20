@@ -1,5 +1,5 @@
 import Store from '.';
-import { companiesService } from '../services';
+import { companiesService } from '$services';
 
 export default function useCompany() {
   const [{ company }, setState] = Store.useStore();
