@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, makeStyles, Typography, LinearProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => (
   {
@@ -41,17 +41,22 @@ const useStyles = makeStyles((theme) => (
 export default function LoadFile(props) {
   const { classes, handleSubmit, handleBack, initialValues } = props;
   const internalClasses = useStyles();
+  const [hasError, setHasError] = useState('');
+
   return (
     <Formik
       enableReinitialize
       initialValues={initialValues}
-      onSubmit={(values) => {
-        handleSubmit(values);
+      onSubmit={(values, { setSubmitting }) => {
+        handleSubmit(values)
+          .catch(({ response: { data } }) => setHasError(data.message))
+          .finally(() => setSubmitting(false));
       }}
     >
       {({
         values,
         setFieldValue,
+        isSubmitting,
       }) => (
         <Form>
           <div className={internalClasses.fileDropArea}>
@@ -82,10 +87,19 @@ export default function LoadFile(props) {
               color="primary"
               variant="contained"
               className={classes.button}
+              disabled={isSubmitting}
             >
               Subir
             </Button>
           </div>
+          {hasError && (
+            <Typography variant="body1" color="secondary">
+              Error: {hasError}
+            </Typography>
+          )}
+          {isSubmitting && (
+            <LinearProgress />
+          )}
         </Form>
       )}
     </Formik>
@@ -105,8 +119,8 @@ LoadFile.propTypes = {
 }
 
 LoadFile.defaultProps = {
-  handleSubmit: () => {},
-  handleBack: () => {},
+  handleSubmit: () => { },
+  handleBack: () => { },
   classes: {},
   initialValues: {},
 }

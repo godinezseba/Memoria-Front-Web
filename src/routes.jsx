@@ -1,5 +1,5 @@
 import React from 'react';
-import { Business, Fastfood } from '@material-ui/icons';
+import { Business, Fastfood, PersonAdd } from '@material-ui/icons';
 
 import { CompaniesForm } from './views/Companies';
 import ProductsForm from './views/Products';
@@ -38,7 +38,7 @@ const routes = {
   '/users': {
     navbar: 'Usuarios',
     component: <USersForm />,
-    icon: <Fastfood />,
+    icon: <PersonAdd />,
     access: 2,
   },
 };
