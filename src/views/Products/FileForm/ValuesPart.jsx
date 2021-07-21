@@ -1,4 +1,5 @@
 import React from 'react';
+import { gql, useQuery } from '@apollo/client';
 import {
   Grid,
   Typography,
@@ -10,16 +11,45 @@ import {
   Button,
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import { useToast } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
+
+import { Loading } from '$atoms';
+
+const COMPANIES = gql`
+{
+  companies{
+    id
+    name
+  }
+}
+`;
 
 export default function FileForm(props) {
   const {
     initialValues,
     handleSubmit,
-    companies,
     classes,
   } = props;
+  const toast = useToast();
+  const { loading, data: { companies } } = useQuery(COMPANIES, {
+    onError: ({ message }) => {
+      toast({
+        title: 'Error en la obtención de las empresas',
+        description: `Detalle: ${message}`,
+        status: 'error',
+        isClosable: true,
+      });
+    },
+  });
+
+  if (loading) {
+    return (
+      <Loading />
+    );
+  }
+
   return (
     <Formik
       enableReinitialize
@@ -45,14 +75,14 @@ export default function FileForm(props) {
                 id="companyId"
                 name="companyId"
                 options={companies}
-                onChange={(e, value) => setFieldValue('companyId', value?._id)}
-                value={companies.find(({ _id }) => _id === values.companyId )}
+                onChange={(e, value) => setFieldValue('companyId', value?.id)}
+                value={companies.find(({ id }) => id === values.companyId)}
                 getOptionLabel={(option) => option?.name || ''}
                 renderInput={(params) => <TextField {...params} id="companyId-input" name="companyId-input" label="Empresa" required />}
               />
             </Grid>
-            <Grid item xs={12} sm={6}/>
-            { !!values.companyId && (
+            <Grid item xs={12} sm={6} />
+            {!!values.companyId && (
               <>
                 <Grid item xs={12}>
                   <Typography variant="body2" align="center" paragraph>
@@ -95,7 +125,7 @@ export default function FileForm(props) {
                   <Typography variant="h6">
                     Nombre de las Columnas
                   </Typography>
-                  <Typography variant="subtitle2" gutterBottom color="secondary" style={{fontWeight: 'bold'}}>
+                  <Typography variant="subtitle2" gutterBottom color="secondary" style={{ fontWeight: 'bold' }}>
                     Considere mayusculas y minusculas!
                   </Typography>
                 </Grid>
@@ -111,7 +141,7 @@ export default function FileForm(props) {
                     helperText="Nombre del Producto"
                   />
                 </Grid>
-                <Grid item xs={6}/>
+                <Grid item xs={6} />
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -123,7 +153,7 @@ export default function FileForm(props) {
                     onChange={handleChange}
                   />
                 </Grid>
-                <Grid item xs={6}/>
+                <Grid item xs={6} />
                 <Grid item xs={12} sm={6}>
                   <TextField
                     id="columns.CO2"
@@ -135,7 +165,7 @@ export default function FileForm(props) {
                     helperText="Considerando la producción de mil productos."
                   />
                 </Grid>
-                <Grid item xs={6}/>
+                <Grid item xs={6} />
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -148,7 +178,7 @@ export default function FileForm(props) {
                     helperText="Considerando la producción de mil productos."
                   />
                 </Grid>
-                <Grid item xs={6}/>
+                <Grid item xs={6} />
                 <Grid item xs={12} sm={6}>
                   <TextField
                     id="columns.externalId"
@@ -160,7 +190,7 @@ export default function FileForm(props) {
                     helperText="Identificador utilizado para este producto (opcional)."
                   />
                 </Grid>
-                <Grid item xs={6}/>
+                <Grid item xs={6} />
               </>
             )}
             <Grid item xs={12}>
@@ -221,6 +251,6 @@ FileForm.defaultProps = {
     }
   },
   companies: [],
-  handleSubmit: () => {},
+  handleSubmit: () => { },
   classes: {},
 }

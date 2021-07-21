@@ -92,12 +92,14 @@ export default function CompaniesForm() {
     );
   }
 
+  const { companies, certifiers } = data;
+
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
         <UserForm
-          companies={data.companies || []}
-          certifiers={data.certifiers || []}
+          companies={companies || []}
+          certifiers={certifiers || []}
           handleSubmit={createUser}
         />
       </Paper>
