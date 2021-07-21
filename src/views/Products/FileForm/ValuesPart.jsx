@@ -33,7 +33,7 @@ export default function FileForm(props) {
     classes,
   } = props;
   const toast = useToast();
-  const { loading, data: { companies } } = useQuery(COMPANIES, {
+  const { loading, data, error } = useQuery(COMPANIES, {
     onError: ({ message }) => {
       toast({
         title: 'Error en la obtención de las empresas',
@@ -44,11 +44,13 @@ export default function FileForm(props) {
     },
   });
 
-  if (loading) {
+  if (loading || error) {
     return (
       <Loading />
     );
   }
+
+  const { companies } = data;
 
   return (
     <Formik

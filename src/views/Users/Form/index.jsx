@@ -71,7 +71,7 @@ export default function CompaniesForm() {
       });
     },
   });
-  const { loading, data } = useQuery(COMPANIES, {
+  const { loading, data, error } = useQuery(COMPANIES, {
     onError: ({ message }) => {
       toast({
         title: 'Error en la obtención de las empresas/certificadoras',
@@ -82,7 +82,7 @@ export default function CompaniesForm() {
     },
   });
 
-  if (loading) {
+  if (loading || error) {
     return (
       <div className={classes.layout}>
         <Paper className={classes.paper}>

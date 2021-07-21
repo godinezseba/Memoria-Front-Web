@@ -8,7 +8,6 @@ import Layout from '$layout';
 import { Login } from '$views';
 
 import { AuthProvider } from '$store/makeUserContext';
-import Store, { initialState } from '$store';
 import { apiGraph } from '$services/api';
 
 const App = () => (
@@ -17,14 +16,12 @@ const App = () => (
       <ChakraProvider>
         <div style={{ height: '100vh' }}>
           <CssBaseline />
-          <Store.Provider initialState={initialState}>
-            <BrowserRouter>
-              <Switch>
-                <Route exact path='/login' component={Login} />
-                <Route path='/' component={Layout} />
-              </Switch>
-            </BrowserRouter>
-          </Store.Provider>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path='/login' component={Login} />
+              <Route path='/' component={Layout} />
+            </Switch>
+          </BrowserRouter>
         </div>
       </ChakraProvider>
     </ApolloProvider>
