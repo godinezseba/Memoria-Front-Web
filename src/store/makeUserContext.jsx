@@ -1,9 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import firebase from 'firebase/app';
 import PropTypes from 'prop-types';
+import { gql } from '@apollo/client';
 
 import Loading from '$atoms/Loading';
-import { usersService } from '$services';
+
+import { apiGraph } from '$services/api';
+
+const ME = gql`
+{
+  me {
+    id
+    name
+    lastName
+    email
+    firebaseId
+    isAdmin
+    companyType
+    companyId
+    editableCompanies
+  }
+}
+`;
 
 export const AuthContext = React.createContext();
 
@@ -17,14 +35,14 @@ export const AuthProvider = ({ children }) => {
     // this value is saved in the context
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        usersService.getData()
-          .then(({ data }) => {
+        apiGraph.query({ query: ME })
+          .then(({ data: { me } }) => {
             setCurrentUser({
               user,
-              data,
+              data: me,
             });
           })
-          .catch((erro) => console.log(erro))
+          .catch((error) => console.log(error))
           .finally(() => setPending(false));
       } else {
         setPending(false);

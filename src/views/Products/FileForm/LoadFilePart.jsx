@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
-import { Button, makeStyles, Typography, LinearProgress } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
+
+import { LoadingButton } from '$atoms';
 
 const useStyles = makeStyles((theme) => (
   {
@@ -81,24 +83,21 @@ export default function LoadFile(props) {
             <Button onClick={handleBack} className={classes.button}>
               Atras
             </Button>
-            <Button
+            <LoadingButton
               id="submit"
               type="submit"
               color="primary"
               variant="contained"
               className={classes.button}
-              disabled={isSubmitting}
+              loading={isSubmitting}
             >
               Subir
-            </Button>
+            </LoadingButton>
           </div>
           {hasError && (
             <Typography variant="body1" color="secondary">
               Error: {hasError}
             </Typography>
-          )}
-          {isSubmitting && (
-            <LinearProgress />
           )}
         </Form>
       )}
