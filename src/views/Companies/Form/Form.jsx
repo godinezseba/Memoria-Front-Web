@@ -9,6 +9,8 @@ import {
 import PropTypes from 'prop-types';
 import { Formik, Form, FieldArray } from 'formik';
 
+import { LoadingButton } from '$atoms';
+
 const useStyles = makeStyles((theme) => ({
   buttons: {
     display: 'flex',
@@ -32,14 +34,16 @@ export default function CompanyForm(props) {
     <Formik
       enableReinitialize
       initialValues={initialValues}
-      onSubmit={(values) => {
-        handleSubmit(values);
+      onSubmit={(values, { setSubmitting }) => {
+        handleSubmit(values)
+          .finally(() => setSubmitting(false));
       }}
     >
       {({
         values,
         handleChange,
         setFieldValue,
+        isSubmitting,
       }) => (
         <Form>
           <Grid container spacing={3}>
@@ -58,7 +62,7 @@ export default function CompanyForm(props) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}/>
+            <Grid item xs={12} sm={6} />
             <Grid item xs={12}>
               <Typography variant="h6">
                 Emisiones
@@ -75,7 +79,7 @@ export default function CompanyForm(props) {
                 helperText="Considere todos los gases emitidos durante todo el año."
               />
             </Grid>
-            <Grid item xs={12} sm={6}/>
+            <Grid item xs={12} sm={6} />
             <Grid item xs={12}>
               <Typography variant="h6">
                 Acciones
@@ -211,15 +215,16 @@ export default function CompanyForm(props) {
             </FieldArray>
             <Grid item xs={12}>
               <div className={classes.buttons}>
-                <Button
+                <LoadingButton
                   id="submit"
                   type="submit"
                   color="primary"
                   variant="contained"
+                  loading={isSubmitting}
                   className={classes.button}
                 >
                   Subir
-                </Button>
+                </LoadingButton>
               </div>
             </Grid>
           </Grid>
@@ -253,5 +258,5 @@ CompanyForm.defaultProps = {
     actions: [],
     certificates: [],
   },
-  handleSubmit: () => {},
+  handleSubmit: () => { },
 }

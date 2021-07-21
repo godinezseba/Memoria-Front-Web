@@ -28,8 +28,8 @@ import PropTypes from 'prop-types';
 import StickyFooter from './Footer';
 
 import { getSidebatPaths } from '../routes';
-import { AuthContext } from '../store/makeUserContext';
-import { signOut } from '../utils';
+import { AuthContext } from '$store/makeUserContext';
+import { signOut } from '$utils';
 
 const drawerWidth = 240;
 
@@ -158,7 +158,7 @@ const SideBar = ({ history, children }) => {
             <MenuIcon />
           </IconButton>
           <Box flexGrow="1" />
-          {!!currentUser ? (
+          {currentUser ? (
             <Box display="flex" alignItems="center" justifyContent="end">
               <Typography variant="subtitle1" className={classes.title}>
                 {`${name} ${lastName || ''}`}

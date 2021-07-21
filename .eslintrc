@@ -1,37 +1,40 @@
 {
-  "parser": "babel-eslint",
-  "extends": [
-    "react-app",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "airbnb",
-    "prettier",
-    "plugin:mdx/recommended",
-    "plugin:react-hooks/recommended"
-  ],
-  "rules": {
-    "react/jsx-props-no-spreading": [0],
-    "jsx-a11y/label-has-for": [
-      2,
-      {
-        "components": ["label"],
-        "required": {
-          "some": ["nesting", "id"]
-        },
-        "allowChildren": false
-      }
-    ]
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true,
+    "node": true
   },
-  "plugins": [
-    "react",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "airbnb", "airbnb/hooks", "prettier"],
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/no-children-prop": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "eslint-import-resolver-custom-alias": {
+        "alias": {
+          "$atoms": "./src/atoms",
+          "$components": "./src/components",
+          "$layout": "./src/layout",
+          "$services": "./src/services",
+          "$store": "./src/store",
+          "$utils": "./src/utils",
+          "$views": "./src/views"
+        },
+        "extensions": [".js", ".jsx"]
+      }
     }
   }
 }

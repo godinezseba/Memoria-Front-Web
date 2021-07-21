@@ -1,3 +1,3 @@
-import UsersForm from './UsersForm';
+import UsersForm from './Form';
 
 export default UsersForm;

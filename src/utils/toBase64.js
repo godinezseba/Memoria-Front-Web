@@ -5,16 +5,13 @@ export const toBase64 = file => new Promise((resolve, reject) => {
   reader.onerror = error => reject(error);
 });
 
-export const mapToBase64 = async list => {
-  const newList = [];
-  for (const element of list) {
+export const mapToBase64 = list => (
+  Promise.all(list.map(async (element) => {
     const { file, ...rest } = element;
     const newFile = await toBase64(file);
-    const newElement = {
+    return {
       ...rest,
       file: newFile,
     };
-    newList.push(newElement);
-  }
-  return newList;
-};
+  }))
+);

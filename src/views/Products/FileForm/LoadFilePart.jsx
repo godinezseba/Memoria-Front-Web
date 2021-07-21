@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
-import { Button, makeStyles, Typography, LinearProgress } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
+import { useToast } from '@chakra-ui/react';
+
+import { LoadingButton } from '$atoms';
+
+import { toBase64 } from '$utils';
+
+const CREATE_PRODUCTS = gql`
+mutation CreateProducts($values: ProductFileInput!) {
+  createProductsByFile(values: $values)
+}
+`;
 
 const useStyles = makeStyles((theme) => (
   {
@@ -39,18 +51,52 @@ const useStyles = makeStyles((theme) => (
 ));
 
 export default function LoadFile(props) {
-  const { classes, handleSubmit, handleBack, initialValues } = props;
+  const {
+    classes,
+    handleNext,
+    handleBack,
+    initialValues,
+    metaData,
+  } = props;
   const internalClasses = useStyles();
+  const toast = useToast();
   const [hasError, setHasError] = useState('');
+  const [createProducts] = useMutation(CREATE_PRODUCTS, {
+    onCompleted: () => {
+      toast({
+        title: 'Productos creados con éxito',
+        description: 'La medición se vera reflejada en unos minutos',
+        status: 'success',
+        isClosable: true,
+      });
+      handleNext();
+    },
+    onError: ({ message }) => {
+      const description = `Detalle: ${message}`;
+      setHasError(description);
+      toast({
+        title: 'Error en la creación de los productos',
+        description,
+        status: 'error',
+        isClosable: true,
+      });
+    },
+  });
 
   return (
     <Formik
       enableReinitialize
       initialValues={initialValues}
-      onSubmit={(values, { setSubmitting }) => {
-        handleSubmit(values)
-          .catch(({ response: { data } }) => setHasError(data.message))
-          .finally(() => setSubmitting(false));
+      onSubmit={async (values, { setSubmitting }) => {
+        const { file } = values;
+        const { type } = file;
+        const { fileType, ...newProducts } = metaData;
+        // check type of file is the same as in metaData
+        if (type.includes(fileType)) {
+          newProducts.file = await toBase64(file);
+          createProducts({ variables: { values: newProducts } })
+            .finally(() => setSubmitting(false));
+        }
       }}
     >
       {({
@@ -81,24 +127,21 @@ export default function LoadFile(props) {
             <Button onClick={handleBack} className={classes.button}>
               Atras
             </Button>
-            <Button
+            <LoadingButton
               id="submit"
               type="submit"
               color="primary"
               variant="contained"
               className={classes.button}
-              disabled={isSubmitting}
+              loading={isSubmitting}
             >
               Subir
-            </Button>
+            </LoadingButton>
           </div>
           {hasError && (
             <Typography variant="body1" color="secondary">
-              Error: {hasError}
+              {hasError}
             </Typography>
-          )}
-          {isSubmitting && (
-            <LinearProgress />
           )}
         </Form>
       )}
@@ -107,7 +150,7 @@ export default function LoadFile(props) {
 }
 
 LoadFile.propTypes = {
-  handleSubmit: PropTypes.func,
+  handleNext: PropTypes.func,
   handleBack: PropTypes.func,
   classes: PropTypes.shape({
     buttons: PropTypes.string,
@@ -116,10 +159,13 @@ LoadFile.propTypes = {
   initialValues: PropTypes.shape({
     file: PropTypes.shape({}),
   }),
+  metaData: PropTypes.shape({
+    fileType: PropTypes.string,
+  }).isRequired,
 }
 
 LoadFile.defaultProps = {
-  handleSubmit: () => { },
+  handleNext: () => { },
   handleBack: () => { },
   classes: {},
   initialValues: {},

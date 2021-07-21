@@ -3,7 +3,6 @@ import {
   Grid,
   Typography,
   TextField,
-  Button,
   makeStyles,
   FormControl,
   InputLabel,
@@ -13,6 +12,8 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
+
+import { LoadingButton } from '$atoms';
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -30,38 +31,36 @@ export default function UserForm(props) {
     initialValues,
     handleSubmit,
     companies,
-    certificates,
+    certifiers,
   } = props;
 
   const classes = useStyles();
 
   return (
     <Formik
-      enableReinitialize
       initialValues={initialValues}
-      onSubmit={(values, actions) => {
-        handleSubmit(values)
-          .then((value) => console.log(value))
-          .catch((error) => console.log(error))
-          .finally(() => actions.setSubmitting(false));
+      onSubmit={(values, { setSubmitting }) => {
+        handleSubmit({ variables: { values } })
+          .finally(() => setSubmitting(false));
       }}
     >
       {({
         values,
         handleChange,
         setFieldValue,
+        isSubmitting,
       }) => {
         // set the array to show
-        const getCompanyTypeArray = () => values.companyType === 'company' ? companies : certificates;
+        const getCompanyTypeArray = () => values.companyType === 'company' ? companies : certifiers;
 
         // because we only save the id, we need to generate an array with all the info
         const getCompaniesThatCanBeEdit = () =>
-          companies.filter(({ _id }) =>
-            values.editableCompanies.includes(_id));
+          companies.filter(({ id }) =>
+            values.editableCompanies.includes(id));
 
         // only get the ids
         const setCompaniesThatCanBeEdit = (e, value) =>
-          setFieldValue('editableCompanies', value.map((option) => option._id));
+          setFieldValue('editableCompanies', value.map((option) => option.id));
 
         return (
           <Form>
@@ -103,7 +102,7 @@ export default function UserForm(props) {
                   required
                 />
               </Grid>
-              <Grid item xs={12} sm={6}/>
+              <Grid item xs={12} sm={6} />
               <Grid item xs={12}>
                 <Typography variant="h6">
                   Sobre su rol
@@ -132,10 +131,10 @@ export default function UserForm(props) {
                   fullWidth
                   id="companyId"
                   name="companyId"
-                  value={getCompanyTypeArray().find((option) => option._id === values.companyId)}
+                  value={getCompanyTypeArray().find((option) => option.id === values.companyId)}
                   options={getCompanyTypeArray()}
                   getOptionLabel={(option) => option.name}
-                  onChange={(e, value) => setFieldValue('companyId', value._id)}
+                  onChange={(e, value) => setFieldValue('companyId', value.id)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -172,15 +171,16 @@ export default function UserForm(props) {
               </Grid>
               <Grid item xs={12}>
                 <div className={classes.buttons}>
-                  <Button
+                  <LoadingButton
                     id="submit"
                     type="submit"
                     color="primary"
                     variant="contained"
+                    loading={isSubmitting}
                     className={classes.button}
                   >
                     Subir
-                  </Button>
+                  </LoadingButton>
                 </div>
               </Grid>
             </Grid>
@@ -201,7 +201,7 @@ UserForm.propTypes = {
     editableCompanies: PropTypes.arrayOf(PropTypes.shape({})),
   }),
   companies: PropTypes.arrayOf(PropTypes.shape({})),
-  certificates: PropTypes.arrayOf(PropTypes.shape({})),
+  certifiers: PropTypes.arrayOf(PropTypes.shape({})),
   handleSubmit: PropTypes.func,
 }
 
@@ -211,6 +211,6 @@ UserForm.defaultProps = {
     companyId: {},
   },
   companies: [],
-  certificates: [],
-  handleSubmit: () => {},
+  certifiers: [],
+  handleSubmit: () => { },
 }

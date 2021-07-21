@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "login",
     "company-form",
-    "product-form"
+    "product-form",
+    "graphql"
   ]
 }

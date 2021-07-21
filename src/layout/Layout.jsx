@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import SideBar from './SideBar';
-import { PrivateRoute } from '../atoms';
+import { PrivateRoute } from '$atoms';
 
 import { getRoutes } from '../routes';
 

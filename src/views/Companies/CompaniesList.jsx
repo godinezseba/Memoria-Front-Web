@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
 
-import CompanyCard from '../../components/CompanyCard';
+import CompanyCard from '$components/CompanyCard';
 import CompaniesDummyList from '../../dummyData/dummy';
 
 const CompaniesList = () => (
