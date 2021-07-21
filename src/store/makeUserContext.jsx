@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import firebase from 'firebase/app';
 import PropTypes from 'prop-types';
 import { gql } from '@apollo/client';
+import { useToast } from '@chakra-ui/react';
 
 import Loading from '$atoms/Loading';
 
@@ -28,6 +29,7 @@ export const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [pending, setPending] = useState(true);
+  const toast = useToast();
 
   useEffect(() => {
     // observer that return the user when this changes
@@ -42,13 +44,18 @@ export const AuthProvider = ({ children }) => {
               data: me,
             });
           })
-          .catch((error) => console.log(error))
+          .catch(({ message }) => toast({
+            title: 'Error al obtener los datos del usuario',
+            description: `Detalle: ${message}`,
+            status: 'error',
+            isClosable: true,
+          }))
           .finally(() => setPending(false));
       } else {
         setPending(false);
       }
     });
-  }, []);
+  }, [toast]);
 
   if (pending) {
     return <Loading />

@@ -158,7 +158,7 @@ const SideBar = ({ history, children }) => {
             <MenuIcon />
           </IconButton>
           <Box flexGrow="1" />
-          {!!currentUser ? (
+          {currentUser ? (
             <Box display="flex" alignItems="center" justifyContent="end">
               <Typography variant="subtitle1" className={classes.title}>
                 {`${name} ${lastName || ''}`}

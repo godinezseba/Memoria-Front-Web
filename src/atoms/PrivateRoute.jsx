@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
 import { AuthContext } from '$store/makeUserContext';
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { currentUser } = useContext(AuthContext);
-  if (!!currentUser)
+  if (currentUser)
     return (
       <Route {...rest}>
         {children}
@@ -13,10 +14,13 @@ const PrivateRoute = ({ children, ...rest }) => {
     )
   return (
     <Route {...rest}>
-      <Redirect to={'/login'} />
+      <Redirect to="/login" />
     </Route>
   );
 };
 
+PrivateRoute.propTypes = {
+  children: PropTypes.array.isRequired,
+}
 
 export default PrivateRoute;

@@ -11,21 +11,21 @@ import { AuthProvider } from '$store/makeUserContext';
 import { apiGraph } from '$services/api';
 
 const App = () => (
-  <AuthProvider>
-    <ApolloProvider client={apiGraph}>
-      <ChakraProvider>
-        <div style={{ height: '100vh' }}>
-          <CssBaseline />
-          <BrowserRouter>
-            <Switch>
-              <Route exact path='/login' component={Login} />
-              <Route path='/' component={Layout} />
-            </Switch>
-          </BrowserRouter>
-        </div>
-      </ChakraProvider>
-    </ApolloProvider>
-  </AuthProvider>
+  <ChakraProvider>
+    <AuthProvider>
+      <ApolloProvider client={apiGraph}>
+          <div style={{ height: '100vh' }}>
+            <CssBaseline />
+            <BrowserRouter>
+              <Switch>
+                <Route exact path='/login' component={Login} />
+                <Route path='/' component={Layout} />
+              </Switch>
+            </BrowserRouter>
+          </div>
+      </ApolloProvider>
+    </AuthProvider>
+  </ChakraProvider>
 );
 
 export default App;

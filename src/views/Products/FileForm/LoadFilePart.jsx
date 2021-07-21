@@ -150,7 +150,7 @@ export default function LoadFile(props) {
 }
 
 LoadFile.propTypes = {
-  handleSubmit: PropTypes.func,
+  handleNext: PropTypes.func,
   handleBack: PropTypes.func,
   classes: PropTypes.shape({
     buttons: PropTypes.string,
@@ -159,10 +159,13 @@ LoadFile.propTypes = {
   initialValues: PropTypes.shape({
     file: PropTypes.shape({}),
   }),
+  metaData: PropTypes.shape({
+    fileType: PropTypes.string,
+  }).isRequired,
 }
 
 LoadFile.defaultProps = {
-  handleSubmit: () => { },
+  handleNext: () => { },
   handleBack: () => { },
   classes: {},
   initialValues: {},
