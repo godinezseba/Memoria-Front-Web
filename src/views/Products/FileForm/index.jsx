@@ -58,15 +58,18 @@ export default function ProductsForm() {
   const [activeStep, setActiveStep] = useState(0);
   const [metaData, setMetaData] = useState({
     companyId: null,
-    fileType: '',
+    fileType: 'csv',
     separator: ',',
     columns: {
       name: '',
+      category: '',
       barCode: '',
-      externalId: '',
+      barCodeType: '',
       CO2: '',
       water: '',
-    }
+      forest: '',
+    },
+    otherColumns: [],
   });
 
   const handleNext = () => {
