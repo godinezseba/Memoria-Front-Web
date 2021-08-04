@@ -11,7 +11,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { useToast } from '@chakra-ui/react';
+import { useToast, Text, Heading } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 
@@ -68,9 +68,8 @@ export default function FileForm(props) {
         <Form>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h6" gutterBottom>
-                Información del Archivo
-              </Typography>
+              <Heading size="lg">Información del Archivo</Heading>
+              <Heading size="md">Empresa</Heading>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Autocomplete
@@ -84,117 +83,113 @@ export default function FileForm(props) {
               />
             </Grid>
             <Grid item xs={12} sm={6} />
-            {!!values.companyId && (
-              <>
-                <Grid item xs={12}>
-                  <Typography variant="body2" align="center" paragraph>
-                    Este formulario solo acepta archivos tipo CSV y Excel. Para esto es necesario especificar que atributos vienen en
-                    el archivo y el nombre de estos:
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="fileType-label" required>Tipo de Archivo</InputLabel>
-                    <Select
-                      required
-                      labelId="fileType"
-                      id="fileType"
-                      name="fileType"
-                      label="Tipo de Archivo"
-                      value={values.fileType}
-                      onChange={handleChange}
-                      fullWidth
-                    >
-                      <MenuItem value="csv">CSV</MenuItem>
-                      <MenuItem value="excel">Excel</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                {values.fileType === 'csv' && (
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      id="separator"
-                      name="separator"
-                      label="Separador"
-                      fullWidth
-                      value={values.separator}
-                      onChange={handleChange}
-                      helperText="Simbolo utilizado para separar columnas en el archivo CSV."
-                    />
-                  </Grid>
-                )}
-                <Grid item xs={12}>
-                  <Typography variant="h6">
-                    Nombre de las Columnas
-                  </Typography>
-                  <Typography variant="subtitle2" gutterBottom color="secondary" style={{ fontWeight: 'bold' }}>
-                    Considere mayusculas y minusculas!
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="columns.name"
-                    name="columns.name"
-                    label="Nombres"
-                    fullWidth
-                    value={values.columns.name}
-                    onChange={handleChange}
-                    helperText="Nombre del Producto"
-                  />
-                </Grid>
-                <Grid item xs={6} />
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="columns.barCode"
-                    name="columns.barCode"
-                    label="Código de Barras del Producto"
-                    fullWidth
-                    value={values.columns.barCodeColumn}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6} />
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="columns.CO2"
-                    name="columns.CO2"
-                    label="Huella de Carbono"
-                    fullWidth
-                    value={values.columns.CO2}
-                    onChange={handleChange}
-                    helperText="Considerando la producción de mil productos."
-                  />
-                </Grid>
-                <Grid item xs={6} />
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="columns.water"
-                    name="columns.water"
-                    label="Huella Hídrica"
-                    fullWidth
-                    value={values.columns.water}
-                    onChange={handleChange}
-                    helperText="Considerando la producción de mil productos."
-                  />
-                </Grid>
-                <Grid item xs={6} />
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="columns.externalId"
-                    name="columns.externalId"
-                    label="Identificador único"
-                    fullWidth
-                    value={values.columns.externalId}
-                    onChange={handleChange}
-                    helperText="Identificador utilizado para este producto (opcional)."
-                  />
-                </Grid>
-                <Grid item xs={6} />
-              </>
+            <Grid item xs={12}>
+              <Heading size="md">Tipo de archivo</Heading>
+              <Text
+                align="center"
+              >
+                Este formulario solo acepta archivos tipo CSV y Excel.
+                Para esto es necesario especificar que atributos vienen en
+                el archivo y el nombre de estos:
+              </Text>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="fileType-label" required>Tipo de Archivo</InputLabel>
+                <Select
+                  required
+                  labelId="fileType"
+                  id="fileType"
+                  name="fileType"
+                  label="Tipo de Archivo"
+                  value={values.fileType}
+                  onChange={handleChange}
+                  fullWidth
+                >
+                  <MenuItem value="csv">CSV</MenuItem>
+                  <MenuItem value="excel">Excel</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            {values.fileType === 'csv' && (
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="separator"
+                  name="separator"
+                  label="Separador"
+                  fullWidth
+                  value={values.separator}
+                  onChange={handleChange}
+                  helperText="Simbolo utilizado para separar columnas en el archivo CSV."
+                />
+              </Grid>
             )}
+            <Grid item xs={12}>
+              <Heading size="md">Columnas obligatorias</Heading>
+              <Heading color="red" size="xs">Considere mayusculas y minusculas!</Heading>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="columns.name"
+                name="columns.name"
+                label="Nombres"
+                fullWidth
+                value={values.columns.name}
+                onChange={handleChange}
+                helperText="Nombre del Producto"
+              />
+            </Grid>
+            <Grid item xs={6} />
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="columns.barCode"
+                name="columns.barCode"
+                label="Código de Barras del Producto"
+                fullWidth
+                value={values.columns.barCodeColumn}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6} />
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="columns.CO2"
+                name="columns.CO2"
+                label="Huella de Carbono"
+                fullWidth
+                value={values.columns.CO2}
+                onChange={handleChange}
+                helperText="Considerando la producción de mil productos."
+              />
+            </Grid>
+            <Grid item xs={6} />
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="columns.water"
+                name="columns.water"
+                label="Huella Hídrica"
+                fullWidth
+                value={values.columns.water}
+                onChange={handleChange}
+                helperText="Considerando la producción de mil productos."
+              />
+            </Grid>
+            <Grid item xs={6} />
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="columns.externalId"
+                name="columns.externalId"
+                label="Identificador único"
+                fullWidth
+                value={values.columns.externalId}
+                onChange={handleChange}
+                helperText="Identificador utilizado para este producto (opcional)."
+              />
+            </Grid>
+            <Grid item xs={6} />
             <Grid item xs={12}>
               <div className={classes.buttons}>
                 <Button
