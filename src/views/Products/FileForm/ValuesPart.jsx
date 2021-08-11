@@ -168,13 +168,13 @@ export default function FileForm(props) {
             <Grid item xs={6} />
             <Grid item xs={12} sm={6}>
               <TextField
-                required
                 id="columns.barCodeType"
                 name="columns.barCodeType"
                 label="Tipo de código de barras"
                 fullWidth
                 value={values.columns.barCodeType}
                 onChange={handleChange}
+                helperText="Si no existe esta columna se asume EAN-13."
               />
             </Grid>
             <Grid item xs={6} />
