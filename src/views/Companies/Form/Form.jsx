@@ -1,15 +1,16 @@
 import React, { Fragment } from 'react';
 import {
   Grid,
-  Typography,
   TextField,
   Button,
   makeStyles,
 } from '@material-ui/core';
+import { Text, Heading } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { Formik, Form, FieldArray } from 'formik';
 
 import { LoadingButton } from '$atoms';
+import { FootPrintSection } from '$components/Forms';
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -48,9 +49,7 @@ export default function CompanyForm(props) {
         <Form>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h6" gutterBottom>
-                Información de la Empresa
-              </Typography>
+              <Heading size="lg">Información de la Empresa</Heading>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -64,30 +63,23 @@ export default function CompanyForm(props) {
             </Grid>
             <Grid item xs={12} sm={6} />
             <Grid item xs={12}>
-              <Typography variant="h6">
-                Emisiones
-              </Typography>
+              <Heading size="md">Emisiones</Heading>
+              <Text
+                align="center"
+              >
+                Estas huellas corresponden a los valores generales emitidos por la empresa.
+              </Text>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="carbonFootPrint"
-                name="carbonFootPrint"
-                label="Huella de Carbono"
-                fullWidth
-                value={values.carbonFootPrint}
-                onChange={handleChange}
-                helperText="Considere todos los gases emitidos durante todo el año."
-              />
-            </Grid>
+            <FootPrintSection values={values} handleChange={handleChange} />
             <Grid item xs={12} sm={6} />
             <Grid item xs={12}>
-              <Typography variant="h6">
-                Acciones
-              </Typography>
-              <Typography variant="body2" align="center" paragraph>
+              <Heading size="md">Acciones</Heading>
+              <Text
+                align="center"
+              >
                 A continuación ingrese las acciones que realiza la empresa para
-                disminuir las distintas emisiones generadas.
-              </Typography>
+                disminuir las distintas emisiones generadas
+              </Text>
             </Grid>
             <FieldArray name="actions">
               {({ remove, push }) => (
@@ -103,7 +95,7 @@ export default function CompanyForm(props) {
                   </Grid>
                   {values.actions?.map((action, key) => {
                     const { name, file, description } = action;
-                    const actionKeyName = `${name}-${key}`;
+                    const actionKeyName = `action-${key}`;
                     return (
                       <Fragment key={actionKeyName}>
                         <Grid item xs={12} sm={6}>
@@ -153,13 +145,13 @@ export default function CompanyForm(props) {
               )}
             </FieldArray>
             <Grid item xs={12}>
-              <Typography variant="h6" gutterBottom>
-                Acreditación de la Información
-              </Typography>
-              <Typography variant="body2" align="center" paragraph>
+              <Heading size="md">Acreditación de la Información</Heading>
+              <Text
+                align="center"
+              >
                 ¿Los datos de sus productos estan acreditados? Agrega los archivos correspondientes
                 para que los usuarios puedan corroborar la veracidad de los datos.
-              </Typography>
+              </Text>
             </Grid>
             <FieldArray name="certificates">
               {({ remove, push }) => (
@@ -175,7 +167,7 @@ export default function CompanyForm(props) {
                   </Grid>
                   {values.certificates?.map((certificate, key) => {
                     const { name, file } = certificate;
-                    const certificateKeyName = `${name}-${key}`;
+                    const certificateKeyName = `certificate-${key}`;
                     return (
                       <Fragment key={certificateKeyName}>
                         <Grid item xs={12} sm={6}>
@@ -237,7 +229,9 @@ export default function CompanyForm(props) {
 CompanyForm.propTypes = {
   initialValues: PropTypes.shape({
     name: PropTypes.string,
-    carbonFootPrint: PropTypes.string,
+    CO2: PropTypes.string,
+    water: PropTypes.string,
+    forest: PropTypes.string,
     actions: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       file: PropTypes.shape({}),
@@ -254,7 +248,9 @@ CompanyForm.propTypes = {
 CompanyForm.defaultProps = {
   initialValues: {
     name: '',
-    carbonFootPrint: '',
+    CO2: '',
+    water: '',
+    forest: '',
     actions: [],
     certificates: [],
   },
