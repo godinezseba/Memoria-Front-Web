@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 import { Formik, Form, FieldArray } from 'formik';
 
 import { Loading } from '$atoms';
-import { FootPrintSection } from '$components/Forms';
 
 const COMPANIES = gql`
 {
@@ -179,7 +178,45 @@ export default function FileForm(props) {
               />
             </Grid>
             <Grid item xs={6} />
-            <FootPrintSection values={values} handleChange={handleChange} prefix="columns"/>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="columns.CO2"
+                name="columns.CO2"
+                label="Huella de Carbono"
+                fullWidth
+                value={values.columns.CO2}
+                onChange={handleChange}
+                helperText="Considerando la emisión por Kilogramo producido."
+              />
+            </Grid>
+            <Grid item xs={6} />
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="columns.water"
+                name="columns.water"
+                label="Huella Hídrica"
+                fullWidth
+                value={values.columns.water}
+                onChange={handleChange}
+                helperText="Considerando el agua gastada por Kilogramo producido."
+              />
+            </Grid>
+            <Grid item xs={6} />
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="columns.forest"
+                name="columns.forest"
+                label="Huella Forestal"
+                fullWidth
+                value={values.columns.forest}
+                onChange={handleChange}
+                helperText="Considerando si la producción del producto influye en la deforestación."
+              />
+            </Grid>
+            <Grid item xs={6} />
             <Grid item xs={12}>
               <Heading size="md">Columnas extras</Heading>
               <Text
