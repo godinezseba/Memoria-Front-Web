@@ -1,10 +1,10 @@
 import React from 'react';
-import { Business, Fastfood, PersonAdd } from '@material-ui/icons';
+import { Business, Fastfood, PersonAdd, Assignment} from '@material-ui/icons';
 
 import { CompaniesForm, CompaniesList } from '$views/Companies';
 import ProductsForm from '$views/Products';
 import USersForm from '$views/Users';
-
+import { CertifierForm } from '$views/Certifier';
 
 /**
  * STRUCTURE:
@@ -34,6 +34,11 @@ const routes = {
         component: <CompaniesForm />,
       },
     }
+  },
+  '/certifier': {
+    navbar: 'Certificadoras',
+    component: <CertifierForm />,
+    icon: <Assignment />,
   },
   '/products': {
     navbar: 'Productos',
