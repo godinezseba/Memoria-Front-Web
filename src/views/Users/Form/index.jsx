@@ -51,7 +51,7 @@ const COMPANIES = gql`
 }
 `;
 
-export default function CompaniesForm() {
+export default function UsersForm() {
   const classes = useStyles();
   const toast = useToast();
   const [createUser] = useMutation(CREATE_USER, {

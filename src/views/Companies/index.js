@@ -1,4 +1,4 @@
-import CompaniesList from './CompaniesList';
+import CompaniesList from './List';
 import CompaniesForm from './Form';
 
 export {

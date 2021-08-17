@@ -1,10 +1,10 @@
 import React from 'react';
 import { Business, Fastfood, PersonAdd, Assignment} from '@material-ui/icons';
 
-import { CompaniesForm } from '$views/Companies';
-import ProductsForm from '$views/Products';
-import USersForm from '$views/Users';
-import { CertifierForm } from '$views/Certifier';
+import { CompaniesForm, CompaniesList } from '$views/Companies';
+import { ProductsForm, ProductsList} from '$views/Products';
+import { UsersForm, UsersList} from '$views/Users';
+import { CertifierForm, CertifierList } from '$views/Certifier';
 
 /**
  * STRUCTURE:
@@ -27,24 +27,46 @@ import { CertifierForm } from '$views/Certifier';
 const routes = {
   '/companies': {
     navbar: 'Empresas',
-    component: <CompaniesForm />,
+    component: <CompaniesList />,
     icon: <Business />,
+    childrens: {
+      '/new': {
+        component: <CompaniesForm />,
+        access: 2,
+      },
+    }
   },
-  '/certifier': {
+  '/certifiers': {
     navbar: 'Certificadoras',
-    component: <CertifierForm />,
+    component: <CertifierList />,
     icon: <Assignment />,
+    childrens: {
+      '/new': {
+        component: <CertifierForm />,
+        access: 2,
+      }
+    }
   },
   '/products': {
     navbar: 'Productos',
-    component: <ProductsForm />,
+    component: <ProductsList />,
     icon: <Fastfood />,
+    childrens: {
+      '/new-by-file': {
+        component: <ProductsForm />,
+      }
+    },
   },
   '/users': {
     navbar: 'Usuarios',
-    component: <USersForm />,
+    component: <UsersList />,
     icon: <PersonAdd />,
     access: 2,
+    childrens: {
+      '/new': {
+        component: <UsersForm />,
+      }
+    }
   },
 };
 

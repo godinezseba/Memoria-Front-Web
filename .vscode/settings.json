@@ -4,6 +4,7 @@
     "company-form",
     "product-form",
     "graphql",
+    "list-companies",
     "certifier-form"
   ]
 }
