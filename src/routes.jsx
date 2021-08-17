@@ -43,6 +43,7 @@ const routes = {
     childrens: {
       '/new': {
         component: <CertifierForm />,
+        access: 2,
       }
     }
   },
