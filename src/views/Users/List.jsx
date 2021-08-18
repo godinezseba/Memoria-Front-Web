@@ -15,7 +15,7 @@ import {
 
 import { Loading } from '$atoms';
 
-const PRODUCTS = gql`
+const USERS = gql`
  {
   users{
     id
@@ -35,7 +35,7 @@ const companyHash = {
 export default function CompaniesList() {
   const toast = useToast();
   const history = useHistory();
-  const { loading, error, data } = useQuery(PRODUCTS, {
+  const { loading, error, data } = useQuery(USERS, {
     onError: ({ message }) => {
       toast({
         title: 'Error en la obtención de los usuarios',
