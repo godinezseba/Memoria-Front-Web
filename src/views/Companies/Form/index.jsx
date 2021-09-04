@@ -1,10 +1,12 @@
 import React from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useParams } from 'react-router';
 import { useToast } from '@chakra-ui/react';
 
 import CompanyForm from './Form';
+import { Loading } from '$atoms';
 
 import { mapToBase64 } from '$utils';
 
@@ -31,17 +33,91 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const GET_COMPANY = gql`
+query GetCompany($id: ID!){
+  company(id: $id){
+    id
+    name
+    rating {
+      CO2
+      water
+      deforestation
+      otherData
+    }
+    actions {
+      name
+      fileId
+      companyType
+      companyId
+      description
+    }
+    certificates {
+      name
+      fileId
+      companyType
+      companyId
+    }
+  }
+}
+`;
+
 const CREATE_COMPANY = gql`
 mutation CreateCompany($values: CompanyInput!){
   createCompany(values: $values){
     id
+    name
+    rating {
+      CO2
+      water
+      deforestation
+      otherData
+    }
+    actions {
+      name
+      companyType
+      companyId
+      description
+    }
+    certificates {
+      name
+      companyType
+      companyId
+    }
+  }
+}
+`;
+
+const UPDATE_COMPANY = gql`
+mutation UpdateCompany($id: ID!, $values: CompanyInput!){
+  updateCompany(id: $id, values: $values){
+    id
+    name
+    rating {
+      CO2
+      water
+      deforestation
+      otherData
+    }
+    actions {
+      name
+      companyType
+      companyId
+      description
+    }
+    certificates {
+      name
+      companyType
+      companyId
+    }
   }
 }
 `;
 
 export default function CompaniesForm() {
+  const { id } = useParams();
   const classes = useStyles();
   const toast = useToast();
+
   const [createCompany] = useMutation(CREATE_COMPANY, {
     onCompleted: () => {
       toast({
@@ -60,13 +136,61 @@ export default function CompaniesForm() {
     },
   });
 
+  const [updateCompany] = useMutation(UPDATE_COMPANY, {
+    onCompleted: () => {
+      toast({
+        title: 'Empresa editada con éxito',
+        status: 'success',
+        isClosable: true,
+      });
+    },
+    onError: ({ message }) => {
+      toast({
+        title: 'Error en la edición de la empresa',
+        description: `Detalle: ${message}`,
+        status: 'error',
+        isClosable: true,
+      });
+    },
+  });
+
   const handleSubmit = async (values) => {
-    const newCompany = values;
+    const { id: _, ...newCompany} = values;
     const { actions, certificates } = values;
 
     newCompany.actions = await mapToBase64(actions);
     newCompany.certificates = await mapToBase64(certificates);
-    return createCompany({ variables: { values } });
+    if (id)
+      return updateCompany({ variables: { id, values: newCompany } })
+    return createCompany({ variables: { values: newCompany } });
+  }
+
+  if (id) {
+    const { loading, error, data } = useQuery(GET_COMPANY, { 
+      variables: { id },
+      onError: ({ message }) => {
+        toast({
+          title: 'Error en la obtención de la información de la empresa',
+          description: `Detalle: ${message}`,
+          status: 'error',
+          isClosable: true,
+        });
+      },
+    });
+    if (loading || error)
+      return (
+        <>
+          <Loading/>
+        </>
+      );
+    const { company } = data;
+    return (
+      <div className={classes.layout}>
+        <Paper className={classes.paper}>
+          <CompanyForm initialValues= {company} handleSubmit={handleSubmit} />
+        </Paper>
+      </div>
+    )      
   }
 
   return (

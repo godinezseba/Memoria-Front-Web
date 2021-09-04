@@ -29,5 +29,7 @@ const authLink = setContext(async (_, { headers }) => {
 
 export const apiGraph = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    addTypename: false
+  }),
 });

@@ -34,6 +34,10 @@ const routes = {
         component: <CompaniesForm />,
         access: 2,
       },
+      '/:id': {
+        component: <CompaniesForm />,
+        access: 2,
+      }
     }
   },
   '/certifiers': {

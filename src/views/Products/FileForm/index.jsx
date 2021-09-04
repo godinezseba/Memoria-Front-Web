@@ -107,6 +107,7 @@ export default function ProductsForm() {
     ),
     2: (
       <CertificateForm
+        companyID={metaData.companyId}
         classes={classes}
         handleSubmit={submitCertificateData}
       />

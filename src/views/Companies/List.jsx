@@ -60,7 +60,7 @@ export default function CompaniesList() {
             { (loading || error) ? (
               <Loading />
             ) : data.companies.map(({id, name, country}) => (
-              <Tr key={id}>
+              <Tr key={id} onClick={() => history.push(`/companies/${id}`)}>
                 <Td>{name}</Td>
                 <Td>{country}</Td>
               </Tr>
