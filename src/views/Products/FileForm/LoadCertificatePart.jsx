@@ -12,18 +12,67 @@ import {
   Divider,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { gql, useQuery } from '@apollo/client';
+import { useToast } from '@chakra-ui/toast';
+
+import { Loading } from '$atoms';
+
+const GETCOMPANY = gql`
+query GetCompany($id: ID!){
+  company(id: $id){
+    id
+    certificates{
+      name
+    }
+  }
+}
+`;
+
+const HeadSection = () => (
+  <>
+    <Typography variant="h6" gutterBottom>
+      Acreditación de la Información
+    </Typography>
+    <Typography variant="body2" align="center" paragraph>
+      ¿Los datos de estos productos estan acreditados? Agrega los archivos correspondientes
+      para que los usuarios puedan corroborar la veracidad de los datos.
+    </Typography>
+  </>
+)
 
 export default function CertificateForm(props) {
   const {
-    initialValues,
     handleSubmit,
     classes,
+    companyID,
   } = props;
+  const toast = useToast();
+  const { loading, data, error } = useQuery(GETCOMPANY, { 
+      variables: { id: companyID },
+      onError: ({ message }) => {
+        toast({
+          title: 'Error en la obtención de la información de la empresa',
+          description: `Detalle: ${message}`,
+          status: 'error',
+          isClosable: true,
+        });
+      },
+    });
+
+  if (loading || error)
+    return (
+      <>
+        <HeadSection />
+        <Loading/>
+      </>
+    );
+
+  const { company } = data;
 
   return(
     <Formik
       enableReinitialize
-      initialValues={initialValues}
+      initialValues={company}
       onSubmit={(values) => {
         handleSubmit(values);
       }}
@@ -35,17 +84,11 @@ export default function CertificateForm(props) {
       }) => {
         const handleAddFile = (event) => {
           const newValues = Array.from(event.currentTarget.files).map((file) => ({ file }));
-          setFieldValue('files', [...values.files, ...newValues]);
+          setFieldValue('certificates', [...values.certificates, ...newValues]);
         };
         return (
           <Form>
-            <Typography variant="h6" gutterBottom>
-              Acreditación de la Información
-            </Typography>
-            <Typography variant="body2" align="center" paragraph>
-              ¿Los datos de estos productos estan acreditados? Agrega los archivos correspondientes
-              para que los usuarios puedan corroborar la veracidad de los datos.
-            </Typography>
+            <HeadSection />
             <Button
               id="file"
               name="file"
@@ -56,12 +99,12 @@ export default function CertificateForm(props) {
               Agregar
               <input type="file" onChange={handleAddFile} hidden multiple/>
             </Button>
-            <FieldArray name="files">
+            <FieldArray name="certificates">
               {({ remove }) => (
                 <List>
                   <Divider />
-                  {values.files?.map((certificate, index) => {
-                    const { file: { name }, nameFile } = certificate;
+                  {values.certificates?.map((certificate, index) => {
+                    const { file, name } = certificate;
                     const keyName = `${name}-${index}`;
                     return (
                       <>
@@ -69,10 +112,10 @@ export default function CertificateForm(props) {
                           <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                             <TextField
                               label="Nombre del Certificado"
-                              id={`files.${index}.nameFile`}
-                              name={`files.${index}.nameFile`}
+                              id={`certificates.${index}.name`}
+                              name={`certificates.${index}.name`}
                               onChange={handleChange}
-                              value={nameFile}
+                              value={name}
                             />
                             <TextField
                               label="Archivo"
@@ -86,8 +129,8 @@ export default function CertificateForm(props) {
                             <IconButton
                               edge="end"
                               aria-label="delete"
-                              id={`files.${index}`}
-                              name={`files.${index}`}
+                              id={`certificates.${index}`}
+                              name={`certificates.${index}`}
                               onClick={() => remove(index)}
                             >
                               <DeleteIcon />
@@ -125,15 +168,11 @@ CertificateForm.propTypes = {
     buttons: PropTypes.string,
     button: PropTypes.string,
   }),
-  initialValues: PropTypes.shape({
-    files: PropTypes.arrayOf(PropTypes.shape({})),
-  }),
+  companyID: PropTypes.string,
 }
 
 CertificateForm.defaultProps = {
   handleSubmit: () => {},
   classes: {},
-  initialValues: {
-    files: [],
-  },
+  companyID: '',
 }
