@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   Grid,
   TextField,
-  Button,
   makeStyles,
   FormControl,
   InputLabel,
@@ -12,9 +11,10 @@ import {
 } from '@material-ui/core';
 import { Text, Heading } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import { Formik, Form, FieldArray } from 'formik';
+import { Formik, Form } from 'formik';
 
 import { LoadingButton } from '$atoms';
+import { FileSection } from '$components/Form/FileSection';
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -144,69 +144,13 @@ export default function CompanyForm(props) {
                 disminuir las distintas emisiones generadas
               </Text>
             </Grid>
-            <FieldArray name="actions">
-              {({ remove, push }) => (
-                <>
-                  <Grid item xs={12}>
-                    <Button
-                      color="secondary"
-                      variant="outlined"
-                      onClick={() => push({ name: '', description: '' })}
-                    >
-                      Agregar
-                    </Button>
-                  </Grid>
-                  {values.actions?.map((action, key) => {
-                    const { name, file, description } = action;
-                    const actionKeyName = `action-${key}`;
-                    return (
-                      <Fragment key={actionKeyName}>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            id={`actions.${key}.name`}
-                            name={`actions.${key}.name`}
-                            label="Nombre"
-                            fullWidth
-                            value={name}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6} justify="center" container>
-                          {!file ? (
-                            <Button component="label" variant="outlined" color="primary">
-                              Adjuntar Archivo
-                              <input
-                                id={`actions.${key}.file`}
-                                name={`actions.${key}.file`}
-                                type="file"
-                                value={file}
-                                onChange={({ currentTarget }) => setFieldValue(`actions.${key}.file`, currentTarget.files[0])}
-                                hidden
-                              />
-                            </Button>
-                          ) : (
-                            <Button component="label" variant="outlined" onClick={() => remove(key)}>
-                              Eliminar Archivo
-                            </Button>
-                          )}
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            id={`actions.${key}.description`}
-                            name={`actions.${key}.description`}
-                            label="Descripción"
-                            fullWidth
-                            value={description}
-                            onChange={handleChange}
-                            multiline
-                          />
-                        </Grid>
-                      </Fragment>
-                    );
-                  })}
-                </>
-              )}
-            </FieldArray>
+            <FileSection
+              field="actions"
+              values={values}
+              handleChange={handleChange}
+              setFieldValue={setFieldValue}
+              withDescription
+            />
             <Grid item xs={12}>
               <Heading size="md">Acreditación de la Información</Heading>
               <Text
@@ -216,58 +160,12 @@ export default function CompanyForm(props) {
                 para que los usuarios puedan corroborar la veracidad de los datos.
               </Text>
             </Grid>
-            <FieldArray name="certificates">
-              {({ remove, push }) => (
-                <>
-                  <Grid item xs={12}>
-                    <Button
-                      color="secondary"
-                      variant="outlined"
-                      onClick={() => push({ name: '' })}
-                    >
-                      Agregar
-                    </Button>
-                  </Grid>
-                  {values.certificates?.map((certificate, key) => {
-                    const { name, file } = certificate;
-                    const certificateKeyName = `certificate-${key}`;
-                    return (
-                      <Fragment key={certificateKeyName}>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            id={`certificates.${key}.name`}
-                            name={`certificates.${key}.name`}
-                            label="Nombre"
-                            fullWidth
-                            value={name}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6} justify="center" container>
-                          {!file ? (
-                            <Button component="label" variant="outlined" color="primary">
-                              Adjuntar Archivo
-                              <input
-                                id={`certificates.${key}.file`}
-                                name={`certificates.${key}.file`}
-                                type="file"
-                                value={file}
-                                onChange={({ currentTarget }) => setFieldValue(`certificates.${key}.file`, currentTarget.files[0])}
-                                hidden
-                              />
-                            </Button>
-                          ) : (
-                            <Button component="label" variant="outlined" onClick={() => remove(key)}>
-                              Eliminar Archivo
-                            </Button>
-                          )}
-                        </Grid>
-                      </Fragment>
-                    );
-                  })}
-                </>
-              )}
-            </FieldArray>
+            <FileSection
+              field="certificates"
+              values={values}
+              handleChange={handleChange}
+              setFieldValue={setFieldValue}
+            />
             <Grid item xs={12}>
               <div className={classes.buttons}>
                 <LoadingButton

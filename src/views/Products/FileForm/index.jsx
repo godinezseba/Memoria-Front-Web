@@ -85,10 +85,6 @@ export default function ProductsForm() {
     handleNext();
   }
 
-  const submitCertificateData = (data) => {
-    console.log(data);
-  }
-
   const stepContent = {
     0: (
       <ValuesPart
@@ -109,7 +105,6 @@ export default function ProductsForm() {
       <CertificateForm
         companyID={metaData.companyId}
         classes={classes}
-        handleSubmit={submitCertificateData}
       />
     ),
   }
