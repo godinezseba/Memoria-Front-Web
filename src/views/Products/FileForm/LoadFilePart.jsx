@@ -94,9 +94,8 @@ export default function LoadFile(props) {
         // check type of file is the same as in metaData
         if (type.includes(fileType)) {
           newProducts.file = await toBase64(file);
-          handleNext();
-          // createProducts({ variables: { values: newProducts } })
-          //   .finally(() => setSubmitting(false));
+          createProducts({ variables: { values: newProducts } })
+            .finally(() => setSubmitting(false));
         }
       }}
     >
