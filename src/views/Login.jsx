@@ -29,7 +29,7 @@ const uiConfig = {
         status: true,
       },
     },
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
 };
 

@@ -3,7 +3,6 @@ import { gql, useQuery } from '@apollo/client';
 import { useHistory } from "react-router-dom";
 import {
   Box,
-  Button,
   Table,
   Thead,
   Tr,
@@ -12,6 +11,7 @@ import {
   Td,
   useToast,
 } from '@chakra-ui/react';
+import Button from '@material-ui/core/Button';
 
 import { Loading } from '$atoms';
 
@@ -45,13 +45,13 @@ export default function CompaniesList() {
   return (
     <Box p={5} shadow="base" borderWidth="1px" borderRadius="10px">
       <Button
-        colorScheme="teal"
-        marginBottom="5"
+        color="primary"
+        variant="contained"
         onClick={() => history.push('/products/new-by-file')}
       >
         Agregar Productos
       </Button>
-      <Box borderWidth="1px" borderRadius="10px">
+      <Box borderWidth="1px" borderRadius="10px" marginTop="5">
         <Table variant="simple">
           <Thead>
             <Tr>
