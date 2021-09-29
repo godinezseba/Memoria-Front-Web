@@ -16,15 +16,18 @@ const httpLink = createHttpLink({
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   const { currentUser } = firebase.auth();
-  const token = await currentUser.getIdToken();
-
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      'Authorization': token,
+  if (currentUser){
+    const token = await currentUser.getIdToken();
+  
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        'Authorization': token,
+      }
     }
   }
+  return headers;
 });
 
 export const apiGraph = new ApolloClient({

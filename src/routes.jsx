@@ -25,6 +25,17 @@ import { CertifierForm, CertifierList } from '$views/Certifier';
  * - IF don't have access it is use the parent access.
  */
 const routes = {
+  '/products': {
+    navbar: 'Productos',
+    component: <ProductsList />,
+    icon: <Fastfood />,
+    childrens: {
+      '/new-by-file': {
+        access: 2,
+        component: <ProductsForm />,
+      }
+    },
+  },
   '/companies': {
     navbar: 'Empresas',
     component: <CompaniesList />,
@@ -50,16 +61,6 @@ const routes = {
         access: 2,
       }
     }
-  },
-  '/products': {
-    navbar: 'Productos',
-    component: <ProductsList />,
-    icon: <Fastfood />,
-    childrens: {
-      '/new-by-file': {
-        component: <ProductsForm />,
-      }
-    },
   },
   '/users': {
     navbar: 'Usuarios',

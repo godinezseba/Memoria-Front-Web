@@ -9,7 +9,7 @@ import { getRoutes } from '../routes';
 const Layout = () => (
   <SideBar>
     <Switch>
-      <Redirect exact from="/" to="/companies" />
+      <Redirect exact from="/" to="/products" />
       {getRoutes().map((route, key) => {
         const { path, component, access } = route;
         const keyName = `${path}-${key}`;

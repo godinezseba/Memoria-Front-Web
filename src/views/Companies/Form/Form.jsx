@@ -191,8 +191,8 @@ CompanyForm.propTypes = {
   initialValues: PropTypes.shape({
     name: PropTypes.string,
     rating: PropTypes.shape({
-      CO2: PropTypes.string,
-      water: PropTypes.string,
+      CO2: PropTypes.number,
+      water: PropTypes.number,
       deforestation: PropTypes.string,
     }),
     actions: PropTypes.arrayOf(PropTypes.shape({

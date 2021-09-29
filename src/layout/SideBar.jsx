@@ -110,7 +110,9 @@ const SideBar = ({ history, children }) => {
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const { currentUser } = useContext(AuthContext);
-  const { data: { name, lastName } = {} } = currentUser || {};
+
+  const { data: { name, lastName, isAdmin } = {} } = currentUser || {};
+  const { location: { pathname } } = history;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -210,15 +212,22 @@ const SideBar = ({ history, children }) => {
         <Divider />
         <List>
           {getSidebatPaths().map((route, key) => {
-            const { navbar, icon = <Fastfood />, path } = route;
+            const { navbar, icon = <Fastfood />, path, access } = route;
             const keyName = `${navbar}-${key}`;
-
-            return (
-              <ListItem button key={keyName} onClick={() => history.push(path)}>
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={navbar} />
-              </ListItem>
-            );
+            if ((access === 2 && isAdmin) || access !== 2) {              
+              return (
+                <ListItem
+                  button
+                  selected={pathname.includes(path)}
+                  key={keyName}
+                  onClick={() => history.push(path)}
+                >
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={navbar} />
+                </ListItem>
+              );
+            }
+            return null;
           })}
         </List>
       </Drawer>
@@ -236,6 +245,9 @@ const SideBar = ({ history, children }) => {
 SideBar.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }),
   }).isRequired,
   children: PropTypes.element.isRequired,
 };

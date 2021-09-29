@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { useHistory } from "react-router-dom";
 import {
@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import Button from '@material-ui/core/Button';
 
+import { AuthContext } from '$store/makeUserContext';
 import { Loading } from '$atoms';
 
 const COMPANIES = gql`
@@ -28,6 +29,8 @@ const COMPANIES = gql`
 export default function CompaniesList() {
   const toast = useToast();
   const history = useHistory();
+  const { currentUser } = useContext(AuthContext);
+
   const { loading, error, data } = useQuery(COMPANIES, {
     onError: ({ message }) => {
       toast({
@@ -41,13 +44,15 @@ export default function CompaniesList() {
 
   return (
     <Box p={5} shadow="base" borderWidth="1px" borderRadius="10px">
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={() => history.push('/companies/new')}
-      >
-        Agregar Empresa
-      </Button>
+      { currentUser && (
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => history.push('/companies/new')}
+        >
+          Agregar Empresa
+        </Button>
+      )}
       <Box borderWidth="1px" borderRadius="10px" marginTop="5">
         <Table variant="simple">
           <Thead>
@@ -59,7 +64,7 @@ export default function CompaniesList() {
             { (loading || error) ? (
               <Loading />
             ) : data.companies.map(({id, name}) => (
-              <Tr key={id} role="button" onClick={() => history.push(`/companies/${id}`)}>
+              <Tr key={id} role={currentUser && 'button'} onClick={() => currentUser && history.push(`/companies/${id}`)}>
                 <Td>{name}</Td>
               </Tr>
             ))}

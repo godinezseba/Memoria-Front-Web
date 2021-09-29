@@ -117,6 +117,20 @@ export default function CompaniesForm() {
   const { id } = useParams();
   const classes = useStyles();
   const toast = useToast();
+  const hasId = Boolean(id);
+
+  const { loading, error, data } = useQuery(GET_COMPANY, { 
+    variables: { id },
+    onError: ({ message }) => {
+      toast({
+        title: 'Error en la obtención de la información de la empresa',
+        description: `Detalle: ${message}`,
+        status: 'error',
+        isClosable: true,
+      });
+    },
+    skip: !hasId
+  });
 
   const [createCompany] = useMutation(CREATE_COMPANY, {
     onCompleted: () => {
@@ -165,38 +179,19 @@ export default function CompaniesForm() {
     return createCompany({ variables: { values: newCompany } });
   }
 
-  if (id) {
-    const { loading, error, data } = useQuery(GET_COMPANY, { 
-      variables: { id },
-      onError: ({ message }) => {
-        toast({
-          title: 'Error en la obtención de la información de la empresa',
-          description: `Detalle: ${message}`,
-          status: 'error',
-          isClosable: true,
-        });
-      },
-    });
-    if (loading || error)
-      return (
-        <>
-          <Loading/>
-        </>
-      );
-    const { company } = data;
-    return (
-      <div className={classes.layout}>
-        <Paper className={classes.paper}>
-          <CompanyForm initialValues= {company} handleSubmit={handleSubmit} />
-        </Paper>
-      </div>
-    )      
-  }
+  if (loading || error)
+  return (
+    <>
+      <Loading/>
+    </>
+  );
+
+  const { company } = data || {};
 
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
-        <CompanyForm handleSubmit={handleSubmit} />
+        <CompanyForm handleSubmit={handleSubmit} initialValues={company} />
       </Paper>
     </div>
   );
