@@ -37,7 +37,7 @@
     "test": "craco test --env=jsdom",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && yarn install",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "craco build"
   },
   "eslintConfig": {
     "extends": [
