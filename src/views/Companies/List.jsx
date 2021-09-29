@@ -31,6 +31,8 @@ export default function CompaniesList() {
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
 
+  const { data: { isAdmin } = {} } = currentUser || {};
+
   const { loading, error, data } = useQuery(COMPANIES, {
     onError: ({ message }) => {
       toast({
@@ -44,7 +46,7 @@ export default function CompaniesList() {
 
   return (
     <Box p={5} shadow="base" borderWidth="1px" borderRadius="10px">
-      { currentUser && (
+      { isAdmin && (
         <Button
           color="primary"
           variant="contained"
