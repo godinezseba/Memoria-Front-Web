@@ -107,7 +107,6 @@ export default function FileForm(props) {
                   fullWidth
                 >
                   <MenuItem value="csv">CSV</MenuItem>
-                  <MenuItem value="excel">Excel</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -187,7 +186,7 @@ export default function FileForm(props) {
                 fullWidth
                 value={values.columns.CO2}
                 onChange={handleChange}
-                helperText="Considerando la emisión por Kilogramo producido."
+                helperText="Considerando la emisión, en kilogramos, por Kilogramo producido."
               />
             </Grid>
             <Grid item xs={6} />
@@ -200,7 +199,7 @@ export default function FileForm(props) {
                 fullWidth
                 value={values.columns.water}
                 onChange={handleChange}
-                helperText="Considerando el agua gastada por Kilogramo producido."
+                helperText="Considerando el agua gastada, en litros, por Kilogramo producido."
               />
             </Grid>
             <Grid item xs={6} />

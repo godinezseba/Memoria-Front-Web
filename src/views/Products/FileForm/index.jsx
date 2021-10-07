@@ -64,7 +64,6 @@ export default function ProductsForm() {
       name: '',
       category: '',
       barCode: '',
-      barCodeType: '',
       CO2: '',
       water: '',
       forest: '',

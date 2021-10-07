@@ -87,7 +87,7 @@ export default function CompanyForm(props) {
                 fullWidth
                 value={values.rating.CO2}
                 onChange={handleChange}
-                helperText="Considerando la emisión por Kilogramo producido."
+                helperText="Considerando la emisión por Kilogramo producido en un mes."
               />
             </Grid>
             <Grid item xs={6} />
@@ -104,7 +104,7 @@ export default function CompanyForm(props) {
                 fullWidth
                 value={values.rating.water}
                 onChange={handleChange}
-                helperText="Considerando el agua gastada por Kilogramo producido."
+                helperText="Considerando el agua gastada por Kilogramo producido en un mes."
               />
             </Grid>
             <Grid item xs={6} />
@@ -121,7 +121,7 @@ export default function CompanyForm(props) {
                   labelId="fileType"
                   id="rating.deforestation"
                   name="rating.deforestation"
-                  label="Tipo de Archivo"
+                  label="Tipo de Huella"
                   value={values.rating.deforestation}
                   onChange={handleChange}
                   fullWidth
@@ -130,7 +130,7 @@ export default function CompanyForm(props) {
                   <MenuItem value="2">Afecta pero esta acreditada</MenuItem>
                   <MenuItem value="3">Afecta y no esta acreditada</MenuItem>
                 </Select>
-                <FormHelperText>Considerando si la producción de cualquiera de sus productos influye en la deforestación.</FormHelperText>
+                <FormHelperText>Considerando si la manufactura de cualquiera de sus productos influye en la deforestación.</FormHelperText>
               </FormControl>
             </Grid>
             <Grid item xs={6} />
