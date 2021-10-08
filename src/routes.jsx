@@ -12,7 +12,7 @@ import { CertifierForm, CertifierList } from '$views/Certifier';
  * ex: aisles is the start to /aisles, /aisles/:id and /aisles/history/:id
  * all this paths have:
  * - name (display in sidebar and breadcrumbs),
- * - access: user access,
+ * - access: user access {2: company user, 3: certifier user, 4: admin},
  * - icon (function): display in sidebar,
  * - component: react component to be display,
  * - childrens (the paths that start with this name, like :id or history/:id in aisles)
@@ -29,6 +29,7 @@ const routes = {
     navbar: 'Productos',
     component: <ProductsList />,
     icon: <Fastfood />,
+    access: 1,
     childrens: {
       '/new-by-file': {
         access: 2,
@@ -40,14 +41,15 @@ const routes = {
     navbar: 'Empresas',
     component: <CompaniesList />,
     icon: <Business />,
+    access: 2,
     childrens: {
       '/new': {
         component: <CompaniesForm />,
-        access: 2,
+        access: 4,
       },
       '/:id': {
         component: <CompaniesForm />,
-        access: 2,
+        access: 4,
       }
     }
   },
@@ -55,10 +57,11 @@ const routes = {
     navbar: 'Certificadoras',
     component: <CertifierList />,
     icon: <Assignment />,
+    access: 4,
     childrens: {
       '/new': {
         component: <CertifierForm />,
-        access: 2,
+        access: 4,
       }
     }
   },
@@ -66,7 +69,7 @@ const routes = {
     navbar: 'Usuarios',
     component: <UsersList />,
     icon: <PersonAdd />,
-    access: 2,
+    access: 4,
     childrens: {
       '/new': {
         component: <UsersForm />,

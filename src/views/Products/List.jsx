@@ -17,8 +17,8 @@ import { Loading } from '$atoms';
 import { AuthContext } from '$store/makeUserContext';
 
 const PRODUCTS = gql`
- {
-  products{
+query GetProducts($filters: ProductsFilters){
+  products(filters: $filters){
     id
     name
 		barCode
@@ -29,12 +29,19 @@ const PRODUCTS = gql`
 }
 `;
 
-export default function CompaniesList() {
+export default function ProductsList() {
   const toast = useToast();
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
+  const { data: { editableCompanies, isAdmin } = {} } = currentUser || {};
+  const filters = {};
+
+  if (currentUser && !isAdmin) {
+    filters.companiesId = editableCompanies
+  }
 
   const { loading, error, data } = useQuery(PRODUCTS, {
+    variables: { filters },
     onError: ({ message }) => {
       toast({
         title: 'Error en la obtención de los productos',

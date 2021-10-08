@@ -18,7 +18,7 @@ import { Loading } from '$atoms';
 
 const COMPANIES = gql`
 {
-  companies{
+  companies(onlyEditable: true){
     id
     name
     country

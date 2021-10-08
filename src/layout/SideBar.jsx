@@ -29,7 +29,7 @@ import StickyFooter from './Footer';
 
 import { getSidebatPaths } from '../routes';
 import { AuthContext } from '$store/makeUserContext';
-import { signOut } from '$utils';
+import { signOut, checkAccess } from '$utils';
 
 const drawerWidth = 240;
 
@@ -111,7 +111,7 @@ const SideBar = ({ history, children }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { currentUser } = useContext(AuthContext);
 
-  const { data: { name, lastName, isAdmin } = {} } = currentUser || {};
+  const { data: { name, lastName } = {} } = currentUser || {};
   const { location: { pathname } } = history;
 
   const handleDrawerOpen = () => {
@@ -214,7 +214,7 @@ const SideBar = ({ history, children }) => {
           {getSidebatPaths().map((route, key) => {
             const { navbar, icon = <Fastfood />, path, access } = route;
             const keyName = `${navbar}-${key}`;
-            if ((access === 2 && isAdmin) || access !== 2) {              
+            if (checkAccess(access, currentUser)) {
               return (
                 <ListItem
                   button

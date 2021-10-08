@@ -14,7 +14,7 @@ const Layout = () => (
         const { path, component, access } = route;
         const keyName = `${path}-${key}`;
         if (access !== 1)
-          return <PrivateRoute path={path} key={keyName}> {component} </PrivateRoute>;
+          return <PrivateRoute access={access} path={path} key={keyName}> {component} </PrivateRoute>;
         return <Route path={path} key={keyName}> {component} </Route>;
       })}
     </Switch>
