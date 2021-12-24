@@ -10,8 +10,8 @@ import {
   Button,
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { useToast, Text, Heading, IconButton, Link } from '@chakra-ui/react';
-import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { useToast, Text, Heading, IconButton, Link, Tooltip, Box, UnorderedList, ListItem} from '@chakra-ui/react';
+import { DeleteIcon, ExternalLinkIcon, QuestionOutlineIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 import { Formik, Form, FieldArray } from 'formik';
 
@@ -189,7 +189,7 @@ export default function FileForm(props) {
                 fullWidth
                 value={values.columns.CO2}
                 onChange={handleChange}
-                helperText="Considerando la emisión, en kilogramos, por Kilogramo producido."
+                helperText="Considerando la emisión en kilogramos, por Kilogramo producido."
               />
             </Grid>
             <Grid item xs={6} />
@@ -202,7 +202,7 @@ export default function FileForm(props) {
                 fullWidth
                 value={values.columns.water}
                 onChange={handleChange}
-                helperText="Considerando el agua gastada, en litros, por Kilogramo producido."
+                helperText="Considerando el agua consumida y generada en forma de residuos en litros, por Kilogramo producido."
               />
             </Grid>
             <Grid item xs={6} />
@@ -215,10 +215,27 @@ export default function FileForm(props) {
                 fullWidth
                 value={values.columns.forest}
                 onChange={handleChange}
-                helperText="Considerando si la producción del producto influye en la deforestación."
+                helperText="Valor numerico que hace referencia a si la manufactura del producto influye en la deforestación."
               />
             </Grid>
-            <Grid item xs={6} />
+            <Grid item xs={6}>
+              <Box h="100%" display="flex" alignItems="center">
+                <Tooltip
+                  hasArrow
+                  label={
+                  <UnorderedList>
+                    <ListItem>&apos;1&apos; indica que el producto no afecta a la deforestación.</ListItem>
+                    <ListItem>&apos;2&apos; indica que el producto utiliza ingredientes que afectan a la deforestación pero se realiza de forma responsable.</ListItem>
+                    <ListItem>&apos;3&apos; indica que el producto contribuye a la deforestación.</ListItem>
+                  </UnorderedList>
+                  }
+                  bg='gray.300'
+                  color='black'
+                >
+                  <QuestionOutlineIcon />
+                </Tooltip>
+              </Box>
+            </Grid>
             <Grid item xs={12}>
               <Heading size="md">Columnas extras</Heading>
               <Text

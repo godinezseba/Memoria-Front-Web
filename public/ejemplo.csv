@@ -1,2 +1,2 @@
-nombres,categorías,codigo-de-barra,tipo-codigo-de-barras,carbon,agua,deforestación
-Ejemplo Nombre Alimento,Ejemplo Nombre Categoría,Ejemplo número código de barras,ean13,número huella de carbono,número huella hídrica,categoría deforestación
+nombres;categorias;codigo-de-barra;tipo-codigo-de-barras;carbon;agua;deforestacion
+ejemplo nombre alimento;ejemplo nombre categoria;ejemplo numero codigo de barras;ean13;huella de carbono en kg por kilogramo producido;huella hidrica en litros por kilogramo;numero categoria deforestacion
