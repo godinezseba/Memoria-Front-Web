@@ -10,8 +10,8 @@ import {
   Button,
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { useToast, Text, Heading, IconButton } from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { useToast, Text, Heading, IconButton, Link } from '@chakra-ui/react';
+import { DeleteIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 import { Formik, Form, FieldArray } from 'formik';
 
@@ -69,6 +69,9 @@ export default function FileForm(props) {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Heading size="lg">Información del Archivo</Heading>
+              <Link href='/ejemplo.csv' color='teal.500'>
+                Archivo de ejemplo <ExternalLinkIcon mx='2px' />
+              </Link>
               <Heading size="md">Empresa</Heading>
             </Grid>
             <Grid item xs={12} sm={6}>
