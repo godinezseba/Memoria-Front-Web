@@ -89,18 +89,17 @@ export default function LoadFile(props) {
       initialValues={initialValues}
       onSubmit={async (values, { setSubmitting }) => {
         const { file } = values;
-        const { type } = file;
+        const { type, name } = file;
         const { fileType, ...newProducts } = metaData;
         // check type of file is the same as in metaData
-        if (type.includes(fileType)) {
+        if (type.includes(fileType) || name.includes(fileType)) {
           newProducts.file = await toBase64(file);
           createProducts({ variables: { values: newProducts } })
             .finally(() => setSubmitting(false));
         } else {
-          console.log({ file });
           toast({
             title: 'Error en la creación de los productos',
-            description: 'El archivo no es un CSV',
+            description: `El archivo no es un ${fileType}`,
             status: 'error',
             isClosable: true,
           });
