@@ -1,2 +1,3 @@
-nombres;categorias;codigo-de-barra;tipo-codigo-de-barras;carbon;agua;deforestacion
-ejemplo nombre alimento;ejemplo nombre categoria;ejemplo numero codigo de barras;ean13;huella de carbono en kg por kilogramo producido;huella hidrica en litros por kilogramo;numero categoria deforestacion
+SEP=,
+nombres,categorias,codigo-de-barra,tipo-codigo-de-barras,carbon,agua,deforestacion
+ejemplo nombre alimento,ejemplo nombre categoria,ejemplo numero codigo de barras,ean13,huella de carbono en kg por kilogramo producido,huella hidrica en litros por kilogramo,numero categoria deforestacion

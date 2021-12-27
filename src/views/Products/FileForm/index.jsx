@@ -59,7 +59,7 @@ export default function ProductsForm() {
   const [metaData, setMetaData] = useState({
     companyId: null,
     fileType: 'csv',
-    separator: ';',
+    separator: ',',
     columns: {
       name: '',
       category: '',
