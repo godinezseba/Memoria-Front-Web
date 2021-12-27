@@ -96,6 +96,14 @@ export default function LoadFile(props) {
           newProducts.file = await toBase64(file);
           createProducts({ variables: { values: newProducts } })
             .finally(() => setSubmitting(false));
+        } else {
+          console.log({ file });
+          toast({
+            title: 'Error en la creación de los productos',
+            description: 'El archivo no es un CSV',
+            status: 'error',
+            isClosable: true,
+          });
         }
       }}
     >
@@ -134,6 +142,7 @@ export default function LoadFile(props) {
               variant="contained"
               className={classes.button}
               loading={isSubmitting}
+              disabled={isSubmitting}
             >
               Subir
             </LoadingButton>
